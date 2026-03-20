@@ -1,7 +1,7 @@
 body {
-  font-family: "Arial", sans-serif;
-  background-color: #f9f3e9;
-  color: rgb(27, 80, 35);
+  font-family: "Times", sans-serif;
+  background-color: rgb(255, 244, 241);
+  color: rgb(0, 0, 0);
   margin: 0;
   padding: 20px;
 }
@@ -9,7 +9,38 @@ body {
 h1,
 h2,
 h3 {
-  color: rgb(50, 98, 34);
+  color: rgb(0, 0, 0);
+}
+
+a {
+  color: #c57b3a;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  background-color: #d69a6c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #c57b3a;
 }
 
 .navbar {
