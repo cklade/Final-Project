@@ -48,6 +48,7 @@ a:hover {
   padding: 10px;
   display: flex;
   justify-content: space-around;}
+  
   .nav-links {
     display: flex;
     list-style-type: none;
