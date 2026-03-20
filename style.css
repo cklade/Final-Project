@@ -13,7 +13,7 @@ h3 {
 }
 
 a {
-  color: #c57b3a; /* Warm color for links */
+  color: #c57b3a;
   text-decoration: none;
 }
 
@@ -25,13 +25,13 @@ a:hover {
   max-width: 1200px;
   margin: auto;
   padding: 20px;
-  background-color: #ffffff; /* White background for content */
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button {
-  background-color: #d69a6c; /* Warm button color */
+  background-color: #d69a6c;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -40,5 +40,5 @@ a:hover {
 }
 
 .button:hover {
-  background-color: #c57b3a; /* Darker shade on hover */
+  background-color: #c57b3a;
 }
