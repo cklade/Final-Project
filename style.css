@@ -1,7 +1,7 @@
 body {
-  font-family: "Arial", sans-serif;
-  background-color: #f9f3e9;
-  color: rgb(27, 80, 35);
+  font-family: "Times", sans-serif;
+  background-color: rgb(255, 244, 241);
+  color: rgb(0, 0, 0);
   margin: 0;
   padding: 20px;
 }
@@ -9,5 +9,14 @@ body {
 h1,
 h2,
 h3 {
-  color: rgb(50, 98, 34);
+  color: rgb(0, 0, 0);
+}
+
+a {
+  color: #c57b3a; /* Warm color for links */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
