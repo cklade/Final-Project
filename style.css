@@ -12,6 +12,10 @@ h3 {
   color: rgb(0, 0, 0);
 }
 
+#sudo_abt {
+  margin: 0 300px 0 0;
+}
+
 a {
   color: #c57b3a;
   text-decoration: none;
