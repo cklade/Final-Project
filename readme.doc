@@ -13,6 +13,125 @@ User 1
 User 2
 “I want to be able to contact the company owners in order to get more information on certain photos”
 
+User 3
+“I want to view detailed information about each photo so that I can decide if it fits my needs before adding it to my cart.”
+
+User 4
+“I want to be able to search and filter photos by category or style so that I can quickly find images that match what I’m looking for.”
+
 ![proto](/Users/coleklade/Documents/Classes/IS424/Final Project/Screenshot 2026-03-22 at 15.00.32.png)
 ![burndown](/Users/coleklade/Documents/Classes/IS424/Final Project/Screenshot 2026-03-22 at 15.55.15.png)
 ![burndown2](/Users/coleklade/Documents/Classes/IS424/Final Project/Screenshot 2026-03-22 at 15.55.39.png)
+
+Scrum Meetings
+
+Meeting 1 (Day 3)
+
+Cole
+Yesterday: Worked on initial homepage wireframe and brainstormed layout ideas with the team.
+Today: Finalize the prototype design and start setting up the HTML structure.
+Blockers: Still deciding on the best layout for car listings.
+
+Brendan
+Yesterday: Worked to connect everyone to the git repository and worked out any kinks there.
+Today: Begin working on the website home page.
+Blockers: None as of yet.
+
+Jacob
+Yesterday: Helped define user stories and started planning navigation bar structure.
+Today: Start building the navigation bar and linking pages.
+Blockers: Unsure about styling consistency across pages.
+
+Andrew
+Yesterday: Worked on initial homepage wireframe and brainstormed layout ideas with the team.
+Today: Finalize the prototype design and start setting up the HTML structure.
+Blockers: Still deciding on the best layout for car listings.
+
+Ryan
+Yesterday: Set up the GitHub repository and reviewed project requirements.
+Today: Begin designing homepage layout using HTML and CSS.
+Blockers: None at the moment.
+
+
+
+
+
+Meeting 2 (Day 9) 
+
+
+Cole
+Yesterday: Finished basic homepage design and styling.
+Today: Review current styling and design with customer to assess the need for changes.
+Blockers: Needs to ensure customer is willing to accept slight deviations from prototype before continuing work.
+
+Brendan
+Yesterday: Planning out next stages for other pages on nav bar
+Today: Begin working on new pages.
+Blockers: No actual photos or anything of the like in our database.
+
+Jacob
+Yesterday: Completed navigation bar design on home page and tested functionality.
+Today: Implement navigation bar design across all pages.
+Blockers: Needs to know if more pages will be added in future.
+
+Andrew
+Yesterday: Finished basic homepage design and styling.
+Today: Review current styling and design with customer to assess the need for changes.
+Blockers: Needs to ensure customer is willing to accept slight deviations from prototype before continuing work.
+
+Ryan
+Yesterday: Guided team members to make sure website design aligns with HTML and CSS design
+Today: Plan JS design for website
+Blockers: Unsure if the CSS page design is aligned with user preferences
+
+
+
+Sprint Review (4 points)
+At the end of the sprint, the team will conduct a sprint review. Show evidence that the team
+completed a thorough sprint review. As part of that evidence, each team needs to invite
+another team for the review. In your README, answer the following questions:
+
+a. What did you learn from doing our first sprint?
+Communication both between team members and with the client are very important for a successful sprint. There were some tasks that were easier to do with 
+a partner and some that only required a single team member. The partner tasks generally went well for bouncing ideas off of another person, but could be 
+difficult when two people were actually working on that same task at the same time (ex: homepage design) just because there was sometimes a slight disconnect.
+Going forward we learned that when working on any tasks involving partners or the whole team, communication should be a priority to prevent redundant code 
+(or other work) and allow for efficient implementation of ideas.
+
+b. What did go well? Why?
+Collaboratively coding the website design was pretty smooth as there were no major errors we encountered when implementing HTML and CSS. Everyone was also 
+briefed on best practices when it comes to pulling changes from the GitHub repository, so there were minimal conflicts. Communication-wise, everyone proactively
+addressed their minor blockers before they escalated into bigger issues. On top of that, if someone finished their tasks earlier than another team member, 
+they were very quick to help someone else in need. Additionally, sprint meetings were well confined to a 15-minute window, and our meetings stayed on topic, 
+making them efficient. Lastly, the goals were realistic as the team did not overcommit. Our sprint backlog was scoped well, and we weren’t overwhelmed with 
+tasks beyond our capabilities and available time. 
+
+c. What didn’t go well? Why not?
+When writing code, especially with a team, we found that our code became somewhat clunky as new designs and features were added. This required us to make 
+changes after realizing different code for different segments of the sprint were incompatible. An example of this would be two people adding css classes for 
+different areas of the website, such as the homepage and navbar, that share sections with the same class, such as h1, h2, and h3. One person would make a 
+change without realizing their css change impacted another area of the website. This led to a lot of retracing steps and having to make small changes later 
+on as the team didn’t write code with future additions to the code in mind. Going forward future additions to the project will be considered and discussed 
+by the whole team to prevent more clunky code from being added. We want new code to be seamlessly integrated with the code we already have.
+
+d. How can you make things better next time?
+As we approach the later phases of the project and get more heavily into coding, we want to ensure communication is strong and that code being added will 
+still work well with new features as they get added. To do this we want to briefly discuss the full scope of the project and consider all future tasks each 
+time our team has a scrum meeting. By mentioning each future task, even those in the backlog, team members will be well aware of what still needs to be added. 
+By knowing what tasks are still incomplete, we all can code and design features with all future tasks in mind, which encourages each team member to write 
+code that will be compatible with additions later on. We want new code to flow well with what is already written so discussion of the full project scope 
+during each meeting will be important. Discussing the full project during each meeting also reminds members of who is responsible for which tasks and leads 
+to more communication about how tasks will be completed. This prevents team members from stepping on each other’s foot and clearly defines responsibilities.
+
+e. Are you satisfied with what you already completed?
+As it stands, yes. We have a clear vision of what we want the end product to look like, and we’ve built a strong foundation through our core pages and 
+nav bar. This has made it easier to build and connect different components of the site. While we have not encountered any major issues so far, we 
+anticipate that challenges will arise as we continue implementing more advanced features, so we’ve remained mindful. Overall, we‘re satisfied with our 
+current progress..
+
+f. Which group was invited? What are your observations/notes? Everybody was present?
+Group with Steven Aquirre, Nathan Wang, Chase Needelman, Harrison Reichert were present during the meeting. Their observations were as follows:
+-Time management for meetings were good since meetings were less than 15 minutes
+-Some team members contributed to conversations frequently while others were more silent. This may indicate engagement gaps or unclear role expectations. 
+-Blockers were well handled as blockers were assigned a clear owner or follow up action
+-Team morale was overall very strong as everyone had a positive tone throughout and are very willing to collaborate. 
