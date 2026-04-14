@@ -326,3 +326,75 @@ footer {
     text-align: center;
   }
 }
+
+/* portfolio */
+
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(255, 244, 241);
+  color: rgb(0, 0, 0);
+}
+
+.custom-navbar {
+  background-color: rgb(79, 26, 26);
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.nav-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.custom-navbar .navbar-item {
+  color: white !important;
+  font-weight: bold;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.custom-navbar .navbar-item:hover {
+  background-color: transparent !important;
+  color: rgb(202, 159, 181) !important;
+}
+
+.portfolio-card {
+  background: white;
+  border: 5px solid #1f0202;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-image {
+  height: 280px;
+}
+
+.portfolio-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-label {
+  margin: 0;
+  padding: 14px 10px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+}
+
+footer {
+  font-size: 1rem;
+}
