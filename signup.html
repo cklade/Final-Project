@@ -20,7 +20,7 @@
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-6-desktop is-7-tablet">
+          <div class="column is-8-desktop is-9-tablet">
             <div class="box" style="padding: 2.5rem; border: 2px solid black">
               <h2 class="title is-4 has-text-black has-text-centered mb-5">
                 Create Your Account
@@ -68,31 +68,115 @@
                   </div>
                 </div>
 
+                <div class="columns">
+                  <div class="column">
+                    <div class="field">
+                      <label class="label">Email</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="email"
+                          id="email"
+                          placeholder="your.email@example.com"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="column">
+                    <div class="field">
+                      <label class="label">Phone</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="tel"
+                          id="phone"
+                          placeholder="Enter your phone number"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr />
+
+                <h3 class="title is-5 has-text-black mb-4">Address Information</h3>
+
                 <div class="field">
-                  <label class="label">Email</label>
+                  <label class="label">Street Address</label>
                   <div class="control">
                     <input
                       class="input"
-                      type="email"
-                      id="email"
-                      placeholder="your.email@example.com"
+                      type="text"
+                      id="street"
+                      placeholder="123 Main St"
                       required
                     />
                   </div>
                 </div>
 
                 <div class="field">
-                  <label class="label">Phone</label>
+                  <label class="label">Unit / Apartment Number</label>
                   <div class="control">
                     <input
                       class="input"
-                      type="tel"
-                      id="phone"
-                      placeholder="Enter your phone number"
-                      required
+                      type="text"
+                      id="unitNumber"
+                      placeholder="Apartment, suite, unit, etc. (optional)"
                     />
                   </div>
                 </div>
+
+                <div class="columns">
+                  <div class="column">
+                    <div class="field">
+                      <label class="label">City</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="text"
+                          id="city"
+                          placeholder="City"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="column">
+                    <div class="field">
+                      <label class="label">State</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="text"
+                          id="state"
+                          placeholder="State"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="column">
+                    <div class="field">
+                      <label class="label">ZIP Code</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="text"
+                          id="zipCode"
+                          placeholder="ZIP code"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr />
 
                 <div class="field">
                   <label class="label">Password</label>

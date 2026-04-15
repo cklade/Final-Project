@@ -1,9 +1,7 @@
-// signup.js
 import { auth, db } from "./app.js";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
-  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
   doc,
@@ -16,6 +14,11 @@ const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.getElementById("lastName");
 const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");
+const streetInput = document.getElementById("street");
+const unitNumberInput = document.getElementById("unitNumber");
+const cityInput = document.getElementById("city");
+const stateInput = document.getElementById("state");
+const zipCodeInput = document.getElementById("zipCode");
 const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
 const errorMessage = document.getElementById("errorMessage");
@@ -46,12 +49,6 @@ function getFriendlyErrorMessage(errorCode) {
   }
 }
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    window.location.href = "homepage.html";
-  }
-});
-
 signupForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   hideError();
@@ -60,6 +57,11 @@ signupForm.addEventListener("submit", async (event) => {
   const lastName = lastNameInput.value.trim();
   const email = emailInput.value.trim();
   const phone = phoneInput.value.trim();
+  const street = streetInput.value.trim();
+  const unitNumber = unitNumberInput.value.trim();
+  const city = cityInput.value.trim();
+  const state = stateInput.value.trim();
+  const zipCode = zipCodeInput.value.trim();
   const password = passwordInput.value;
   const confirmPassword = confirmPasswordInput.value;
 
@@ -68,10 +70,14 @@ signupForm.addEventListener("submit", async (event) => {
     !lastName ||
     !email ||
     !phone ||
+    !street ||
+    !city ||
+    !state ||
+    !zipCode ||
     !password ||
     !confirmPassword
   ) {
-    showError("Please complete all fields.");
+    showError("Please complete all required fields.");
     return;
   }
 
@@ -101,12 +107,22 @@ signupForm.addEventListener("submit", async (event) => {
       created_at: serverTimestamp(),
       customer_type: "standard",
       preferred_contact_method: "email",
-      addresses: [],
+      addresses: [
+        {
+          street: street,
+          city: city,
+          state: state,
+          zip_code: zipCode,
+          unit_number: unitNumber || "",
+        },
+      ],
     });
 
     window.location.href = "homepage.html";
   } catch (error) {
-    console.error("Signup error:", error);
-    showError(getFriendlyErrorMessage(error.code));
+    console.error("Signup error code:", error.code);
+    console.error("Signup error message:", error.message);
+    console.error("Full signup error:", error);
+    showError(error.message || getFriendlyErrorMessage(error.code));
   }
 });
