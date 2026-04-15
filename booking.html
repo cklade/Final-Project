@@ -15,8 +15,14 @@
   <body>
     <section class="section">
       <div class="container is-max-desktop">
-        <h1 class="title is-2 has-text-black mb-5">Book an Appointment</h1>
-
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
+        >
+          <h1 class="title is-2 has-text-black mb-0">Book an Appointment</h1>
+          <div class="cart-status-box">
+            Cart: <span id="cartCount">0</span> photo(s)
+          </div>
+        </div>
         <nav
           class="navbar custom-navbar mb-6"
           role="navigation"
@@ -57,6 +63,176 @@
             </div>
           </div>
         </nav>
-    </header>
+        <div class="columns is-centered">
+          <div class="column is-8-desktop is-10-tablet">
+            <div class="booking-card">
+              <h2 class="title is-4 has-text-black mb-4">
+                Schedule Your Session
+              </h2>
+              <p class="mb-5 booking-intro">
+                We would love to help capture your special moments. Please fill
+                out the form below to request an appointment, and we will follow
+                up with you as soon as possible.
+              </p>
+
+              <div class="booking-success-box mb-5 is-hidden">
+                Thank you for your request. We have received your information
+                and will contact you soon to confirm your appointment details.
+              </div>
+
+              <form>
+                <div class="field">
+                  <label class="label has-text-black">Session Type</label>
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select>
+                        <option>Select a session type</option>
+                        <option>Single Portrait</option>
+                        <option>Graduation Photos</option>
+                        <option>Family Portraits</option>
+                        <option>Couples Session</option>
+                        <option>Group Photos</option>
+                        <option>Event Photography</option>
+                        <option>Professional Headshots</option>
+                        <option>Car Photography</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="columns">
+                  <div class="column is-half">
+                    <div class="field">
+                      <label class="label has-text-black">Preferred Time</label>
+                      <div class="control">
+                        <div class="select is-fullwidth">
+                          <select id="hour-select">
+                            <option value="">Select Hour</option>
+                            <!-- Generate options for hours 0-23 -->
+                            <script>
+                              for (let i = 8; i < 20; i++) {
+                                const hour = i < 10 ? "0" + i : i;
+                                document.write(
+                                  `<option value="${hour}">${hour}:00</option>`
+                                );
+                              }
+                            </script>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <label class="label has-text-black">Minutes</label>
+                      <div class="control">
+                        <div class="select is-fullwidth">
+                          <select id="minute-select">
+                            <option value="">Select Minutes</option>
+                            <script>
+                              for (let i = 0; i < 60; i += 5) {
+                                const minute = i < 10 ? "0" + i : i;
+                                document.write(
+                                  `<option value="${minute}">${minute}</option>`
+                                );
+                              }
+                            </script>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label has-text-black">Preferred Location</label>
+                  <div class="control">
+                    <input
+                      class="input booking-input"
+                      type="text"
+                      required
+                      type="text"
+                      placeholder="Enter your preferred location"
+                    />
+                  </div>
+                </div>
+
+                <div class="columns">
+                  <div class="column">
+                    <div class="field">
+                      <label class="label has-text-black">Full Name</label>
+                      <div class="control">
+                        <input
+                          class="input booking-input"
+                          type="text"
+                          required
+                          type="text"
+                          placeholder="Enter your full name"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="column">
+                    <div class="field">
+                      <label class="label has-text-black">Phone Number</label>
+                      <div class="control">
+                        <input
+                          class="input booking-input"
+                          type="text"
+                          required
+                          type="tel"
+                          placeholder="Enter your phone number"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label has-text-black">Email Address</label>
+                  <div class="control">
+                    <input
+                      class="input booking-input"
+                      type="text"
+                      required
+                      type="email"
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label has-text-black">Additional Notes</label>
+                  <div class="control">
+                    <textarea
+                      class="textarea booking-textarea"
+                      placeholder="Tell us about your session, preferred location, group size, or any special requests"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div class="field mt-5">
+                  <div class="control">
+                    <button class="button booking-button" type="submit">
+                      Submit Request
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="booking-contact-note mt-5">
+              <p>
+                For special inquiries, please email us at
+                <strong>klade.photography@gmail.com</strong> or call
+                <strong>1 - KLADE PHOTO</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

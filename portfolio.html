@@ -15,7 +15,14 @@
   <body>
     <section class="section">
       <div class="container is-max-desktop">
-        <h1 class="title is-2 has-text-black mb-5">Portfolio</h1>
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
+        >
+          <h1 class="title is-2 has-text-black mb-0">Portfolio</h1>
+          <div class="cart-status-box">
+            Cart: <span id="cartCount">0</span> photo(s)
+          </div>
+        </div>
 
         <nav
           class="navbar custom-navbar mb-6"
@@ -57,10 +64,14 @@
             </div>
           </div>
         </nav>
+
         <section class="mb-5">
           <h2 class="title is-4 has-text-black">
             A selection of our recent work
           </h2>
+          <p class="featured-subtext">
+            Browse the gallery and add your favorite photos to your cart.
+          </p>
         </section>
 
         <section>
@@ -71,6 +82,15 @@
                   <img src="pictures/IMG_1271.jpg" alt="Urban Sunset" />
                 </figure>
                 <p class="portfolio-label">Urban Sunset</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Urban Sunset"
+                    data-image="pictures/IMG_1271.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -80,6 +100,15 @@
                   <img src="pictures/IMG_3963.jpg" alt="Portrait Session" />
                 </figure>
                 <p class="portfolio-label">Portrait Session</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Portrait Session"
+                    data-image="pictures/IMG_3963.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -92,6 +121,15 @@
                   />
                 </figure>
                 <p class="portfolio-label">Mountain Landscape</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Mountain Landscape"
+                    data-image="pictures/IMG_3708-Enhanced-NR.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -101,6 +139,15 @@
                   <img src="pictures/IMG_4669.jpg" alt="Nature Photography" />
                 </figure>
                 <p class="portfolio-label">Nature Photography</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Nature Photography"
+                    data-image="pictures/IMG_4669.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -110,6 +157,15 @@
                   <img src="pictures/IMG_5065.jpg" alt="Car Photography" />
                 </figure>
                 <p class="portfolio-label">Car Photography</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Car Photography"
+                    data-image="pictures/IMG_5065.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -119,6 +175,15 @@
                   <img src="pictures/IMG_1331.jpg" alt="City Portraits" />
                 </figure>
                 <p class="portfolio-label">City Portraits</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="City Portraits"
+                    data-image="pictures/IMG_1331.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -128,6 +193,15 @@
                   <img src="pictures/IMG_4607.jpg" alt="Graduation Photos" />
                 </figure>
                 <p class="portfolio-label">Graduation Photos</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Graduation Photos"
+                    data-image="pictures/IMG_4607.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -137,6 +211,15 @@
                   <img src="pictures/IMG_5929.jpg" alt="Group Session" />
                 </figure>
                 <p class="portfolio-label">Group Session</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Group Session"
+                    data-image="pictures/IMG_5929.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -146,7 +229,38 @@
                   <img src="pictures/IMG_5289.jpg" alt="Star Photography" />
                 </figure>
                 <p class="portfolio-label">Star Photography</p>
+                <div class="portfolio-card-actions">
+                  <button
+                    class="button hero-button-primary add-to-cart-button"
+                    data-name="Star Photography"
+                    data-image="pictures/IMG_5289.jpg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cta-strip mt-6 mb-6">
+          <div class="columns is-vcentered">
+            <div class="column is-8">
+              <h2 class="title is-4 has-text-black mb-2">
+                Ready to review your selections?
+              </h2>
+              <p>
+                Added photos are saved in your cart on this browser so you can
+                keep browsing and choose your favorites.
+              </p>
+            </div>
+
+            <div
+              class="column is-4 has-text-right-desktop has-text-left-tablet"
+            >
+              <a href="cart.html" class="button hero-button-primary">
+                View Cart
+              </a>
             </div>
           </div>
         </section>
@@ -156,5 +270,7 @@
         </footer>
       </div>
     </section>
+
+    <script src="app.js"></script>
   </body>
 </html>
