@@ -33,37 +33,38 @@
             <div class="navbar-start nav-center">
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="homepage.html"
+                href="index_draft.html"
                 >Home</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="about.html"
+                href="about_draft.html"
                 >About</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="portfolio.html"
+                href="portfolio_draft.html"
                 >Portfolio</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="booking.html"
+                href="booking_draft.html"
                 >Book Appointment</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="review.html"
+                href="review_draft.html"
                 >Reviews</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="contact.html"
+                href="contact_draft.html"
                 >Contact</a
               >
             </div>
           </div>
         </nav>
+
         <section class="hero-box mb-6">
           <div class="columns is-vcentered">
             <div class="column is-7">
@@ -93,7 +94,7 @@
           </div>
         </section>
 
-        <section class="review-form-box mb-6"></section>
+        <section class="review-form-box mb-6">
           <h2 class="title is-4 has-text-black mb-4">Write a Review</h2>
 
           <form id="reviewForm">
@@ -184,7 +185,7 @@
           </form>
         </section>
 
-        <section class="mb-6"></section>
+        <section class="mb-6">
           <h2 class="title is-4 has-text-black mb-4">Recent Reviews</h2>
           <div id="reviewsContainer" class="columns is-multiline"></div>
         </section>
@@ -247,15 +248,15 @@
 
       function createReviewCard(review) {
         return `
-          <div class="column is-half">
-            <div class="review-card">
-              <p class="reviews-stars mb-3">${review.rating}</p>
-              <p class="review-text mb-4">"${review.text}"</p>
-              <p class="review-name">${review.name}</p>
-              <p class="review-type">${review.type}</p>
-            </div>
+        <div class="column is-half">
+          <div class="review-card">
+            <p class="reviews-stars mb-3">${review.rating}</p>
+            <p class="review-text mb-4">"${review.text}"</p>
+            <p class="review-name">${review.name}</p>
+            <p class="review-type">${review.type}</p>
           </div>
-        `;
+        </div>
+      `;
       }
 
       function renderReviews() {
@@ -288,4 +289,3 @@
     </script>
   </body>
 </html>
-
