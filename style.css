@@ -634,3 +634,60 @@ body {
     letter-spacing: 2px;
   }
 }
+
+.contact-form-box,
+.contact-info-card {
+  background: white;
+  border: 4px solid #1f0202;
+  border-radius: 20px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+}
+
+.contact-info-line {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+}
+
+.contact-side-box {
+  height: auto;
+}
+
+.contact-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  line-height: 1.9;
+}
+
+.contact-list li {
+  margin-bottom: 0.35rem;
+}
+
+.custom-input,
+.custom-select select {
+  border: 2px solid rgb(79, 26, 26);
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+.custom-input:focus,
+.custom-select select:focus {
+  border-color: rgb(105, 38, 38);
+  box-shadow: 0 0 0 0.125em rgba(79, 26, 26, 0.15);
+}
+
+.label {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  .contact-form-box,
+  .contact-info-card {
+    padding: 1.5rem;
+  }
+
+  .contact-info-line {
+    font-size: 1rem;
+  }
+}
