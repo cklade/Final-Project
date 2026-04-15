@@ -93,9 +93,199 @@
           </div>
         </section>
 
-        
+        <section class="review-form-box mb-6"></section>
+          <h2 class="title is-4 has-text-black mb-4">Write a Review</h2>
 
-    </header>
+          <form id="reviewForm">
+            <div class="columns is-multiline">
+              <div class="column is-half">
+                <div class="field">
+                  <label class="label has-text-black">Your Name</label>
+                  <div class="control">
+                    <input
+                      class="input custom-input"
+                      type="text"
+                      id="reviewName"
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="column is-half">
+                <div class="field">
+                  <label class="label has-text-black">Session Type</label>
+                  <div class="control">
+                    <div class="select is-fullwidth custom-select">
+                      <select id="reviewType" required>
+                        <option value="">Select a session type</option>
+                        <option value="Portrait Session">
+                          Portrait Session
+                        </option>
+                        <option value="Graduation Session">
+                          Graduation Session
+                        </option>
+                        <option value="Family Photography">
+                          Family Photography
+                        </option>
+                        <option value="Couples Session">Couples Session</option>
+                        <option value="Event Photography">
+                          Event Photography
+                        </option>
+                        <option value="Creative Lifestyle Shoot">
+                          Creative Lifestyle Shoot
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="column is-half">
+                <div class="field">
+                  <label class="label has-text-black">Rating</label>
+                  <div class="control">
+                    <div class="select is-fullwidth custom-select">
+                      <select id="reviewRating" required>
+                        <option value="">Select a rating</option>
+                        <option value="★★★★★">5 Stars</option>
+                        <option value="★★★★☆">4 Stars</option>
+                        <option value="★★★☆☆">3 Stars</option>
+                        <option value="★★☆☆☆">2 Stars</option>
+                        <option value="★☆☆☆☆">1 Star</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="column is-full">
+                <div class="field">
+                  <label class="label has-text-black">Your Review</label>
+                  <div class="control">
+                    <textarea
+                      class="textarea custom-input"
+                      id="reviewText"
+                      rows="5"
+                      placeholder="Share your experience..."
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="column is-full">
+                <button type="submit" class="button hero-button-primary">
+                  Submit Review
+                </button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="mb-6"></section>
+          <h2 class="title is-4 has-text-black mb-4">Recent Reviews</h2>
+          <div id="reviewsContainer" class="columns is-multiline"></div>
+        </section>
+
+        <section class="cta-strip mb-6">
+          <div class="columns is-vcentered">
+            <div class="column is-8">
+              <h2 class="title is-4 has-text-black mb-2">
+                Ready to book your own session?
+              </h2>
+              <p>
+                We would love to help capture your next milestone, celebration,
+                or special moment.
+              </p>
+            </div>
+
+            <div
+              class="column is-4 has-text-right-desktop has-text-left-tablet"
+            >
+              <a href="booking_draft.html" class="button hero-button-primary">
+                Book Appointment
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <footer class="has-text-centered mt-6">
+          <p>&copy; 2025 Klade Photography</p>
+        </footer>
+      </div>
+    </section>
+
+    <script>
+      const reviewForm = document.getElementById("reviewForm");
+      const reviewsContainer = document.getElementById("reviewsContainer");
+
+      const defaultReviews = [
+        {
+          name: "Emily R.",
+          type: "Portrait Session",
+          rating: "★★★★★",
+          text: "Klade Photography made the entire session feel easy and natural. The photos came out better than I could have hoped for, and the final gallery looked so polished.",
+        },
+        {
+          name: "Jordan T.",
+          type: "Family Photography",
+          rating: "★★★★★",
+          text: "Very professional, very friendly, and incredibly talented. The photos captured genuine moments instead of feeling posed, which made them even more special.",
+        },
+      ];
+
+      function getReviews() {
+        const savedReviews = localStorage.getItem("kladeReviews");
+        return savedReviews ? JSON.parse(savedReviews) : defaultReviews;
+      }
+
+      function saveReviews(reviews) {
+        localStorage.setItem("kladeReviews", JSON.stringify(reviews));
+      }
+
+      function createReviewCard(review) {
+        return `
+          <div class="column is-half">
+            <div class="review-card">
+              <p class="reviews-stars mb-3">${review.rating}</p>
+              <p class="review-text mb-4">"${review.text}"</p>
+              <p class="review-name">${review.name}</p>
+              <p class="review-type">${review.type}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderReviews() {
+        const reviews = getReviews();
+        reviewsContainer.innerHTML = reviews
+          .slice()
+          .reverse()
+          .map(createReviewCard)
+          .join("");
+      }
+
+      reviewForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("reviewName").value.trim();
+        const type = document.getElementById("reviewType").value;
+        const rating = document.getElementById("reviewRating").value;
+        const text = document.getElementById("reviewText").value.trim();
+
+        if (!name || !type || !rating || !text) return;
+
+        const reviews = getReviews();
+        reviews.push({ name, type, rating, text });
+        saveReviews(reviews);
+        renderReviews();
+        reviewForm.reset();
+      });
+
+      renderReviews();
+    </script>
   </body>
 </html>
 

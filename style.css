@@ -426,3 +426,103 @@ footer {
     margin-top: 1rem;
   }
 }
+
+/* booking */
+
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(255, 244, 241);
+  color: rgb(0, 0, 0);
+}
+
+.custom-navbar {
+  background-color: rgb(79, 26, 26);
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.nav-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.custom-navbar .navbar-item {
+  color: white !important;
+  font-weight: bold;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.custom-navbar .navbar-item:hover {
+  background-color: transparent !important;
+  color: rgb(202, 159, 181) !important;
+}
+
+.booking-card {
+  background: white;
+  border: 4px solid #1f0202;
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+  padding: 2rem;
+}
+
+.booking-intro {
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.booking-input,
+.booking-textarea,
+.select select {
+  border: 1px solid #6b6b6b;
+  box-shadow: none;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.booking-input:focus,
+.booking-textarea:focus,
+.select select:focus {
+  border-color: rgb(79, 26, 26);
+  box-shadow: 0 0 0 0.125em rgba(79, 26, 26, 0.2);
+}
+
+.booking-textarea {
+  min-height: 160px;
+}
+
+.booking-button {
+  background-color: rgb(79, 26, 26);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.booking-button:hover {
+  background-color: rgb(105, 38, 38);
+  color: white;
+}
+
+.booking-success-box {
+  background-color: rgb(255, 244, 241);
+  border-left: 5px solid rgb(79, 26, 26);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.booking-contact-note {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+  .booking-card {
+    padding: 1.5rem;
+  }
+}
