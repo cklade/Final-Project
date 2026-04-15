@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Klade Photography</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="mb-5 has-text-centered">
+          <h1 class="title is-2 has-text-black">Klade Photography</h1>
+        </div>
+
+        <!-- Login Box -->
+        <div class="columns is-centered">
+          <div class="column is-5-desktop is-6-tablet">
+            <div class="box" style="padding: 2.5rem; border: 2px solid black">
+              <h2 class="title is-4 has-text-black has-text-centered mb-5">
+                Login to Your Account
+              </h2>
+
+              <!-- Error message (hidden by default) -->
+              <div
+                id="errorMessage"
+                class="notification is-danger is-light"
+                style="display: none"
+              >
+                <button class="delete" onclick="hideError()"></button>
+                <p id="errorText"></p>
+              </div>
+
+              <form id="loginForm">
+                <div class="field">
+                  <label class="label">Email</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="email"
+                      id="email"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label">Password</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="checkbox">
+                    <input type="checkbox" id="rememberMe" />
+                    Remember me
+                  </label>
+                </div>
+
+                <div class="field">
+                  <div class="control">
+                    <button
+                      type="submit"
+                      class="button hero-button-primary is-fullwidth"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="has-text-centered mt-4">
+                <p>
+                  <a href="#" class="has-text-grey">Forgot password?</a>
+                </p>
+                <p class="mt-2">
+                  Don't have an account?
+                  <a href="signup.html" class="has-text-weight-bold">Sign up</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="has-text-centered mt-6">
+          <p>&copy; 2025 Klade Photography</p>
+        </footer>
+      </div>
+    </section>
+
+    <script src="login.js"></script>
+  </body>
+</html>
