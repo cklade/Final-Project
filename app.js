@@ -1,86 +1,22 @@
-document.addEventListener("DOMContentLoaded", function () {
-  initializeReviews();
-  initializeContactForm();
-  initializeBookingForm();
-  initializePhotoCart();
-});
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
 
-/* ------------------------------ */
-/* Photo Cart Functionality       */
-/* ------------------------------ */
+const firebaseConfig = {
+  apiKey: "AIzaSyC6zcOyaFTO_HeBKgbK83JzHYK8PfXIZFM",
+  authDomain: "final-proj-klade-photography.firebaseapp.com",
+  projectId: "final-proj-klade-photography",
+  storageBucket: "final-proj-klade-photography.firebasestorage.app",
+  messagingSenderId: "479271062092",
+  appId: "1:479271062092:web:fe2e73f67a8e71f74402e9",
+  measurementId: "G-B59G1X7TX4",
+};
 
-function initializePhotoCart() {
-  const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
-  const cartCount = document.getElementById("cartCount");
+const app = initializeApp(firebaseConfig);
 
-  if (!addToCartButtons.length && !cartCount) return;
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
 
-  function getCart() {
-    const savedCart = localStorage.getItem("kladePhotoCart");
-
-    if (!savedCart) return [];
-
-    try {
-      return JSON.parse(savedCart);
-    } catch (error) {
-      console.error("Could not parse cart data:", error);
-      return [];
-    }
-  }
-
-  function saveCart(cart) {
-    localStorage.setItem("kladePhotoCart", JSON.stringify(cart));
-  }
-
-  function updateCartCount() {
-    if (!cartCount) return;
-    const cart = getCart();
-    cartCount.textContent = cart.length;
-  }
-
-  function photoAlreadyInCart(cart, imagePath) {
-    return cart.some(function (item) {
-      return item.image === imagePath;
-    });
-  }
-
-  addToCartButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const name = button.dataset.name;
-      const image = button.dataset.image;
-
-      if (!name || !image) return;
-
-      const cart = getCart();
-
-      if (photoAlreadyInCart(cart, image)) {
-        const originalText = button.textContent;
-        button.textContent = "Already in Cart";
-        button.disabled = true;
-
-        setTimeout(function () {
-          button.textContent = originalText;
-          button.disabled = false;
-        }, 1200);
-
-        updateCartCount();
-        return;
-      }
-
-      cart.push({ name, image });
-      saveCart(cart);
-      updateCartCount();
-
-      const originalText = button.textContent;
-      button.textContent = "Added!";
-      button.disabled = true;
-
-      setTimeout(function () {
-        button.textContent = originalText;
-        button.disabled = false;
-      }, 1200);
-    });
-  });
-
-  updateCartCount();
-}
+export { app, db, auth, storage };
