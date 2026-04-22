@@ -1,18 +1,19 @@
-import { auth, db } from "./app.js";
+import { db, auth } from "./app.js";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   doc,
   setDoc,
-  serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const signupForm = document.getElementById("signupForm");
 const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.getElementById("lastName");
-const emailInput = document.getElementById("email");
+const usernameInput = document.getElementById("username");
+const loginIdentifierInput = document.getElementById("loginIdentifier");
 const phoneInput = document.getElementById("phone");
 const streetInput = document.getElementById("street");
 const unitNumberInput = document.getElementById("unitNumber");
@@ -49,80 +50,48 @@ function getFriendlyErrorMessage(errorCode) {
   }
 }
 
-signupForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
   hideError();
 
-  const firstName = firstNameInput.value.trim();
-  const lastName = lastNameInput.value.trim();
-  const email = emailInput.value.trim();
-  const phone = phoneInput.value.trim();
-  const street = streetInput.value.trim();
-  const unitNumber = unitNumberInput.value.trim();
-  const city = cityInput.value.trim();
-  const state = stateInput.value.trim();
-  const zipCode = zipCodeInput.value.trim();
+  const identifier = loginIdentifierInput.value.trim();
   const password = passwordInput.value;
-  const confirmPassword = confirmPasswordInput.value;
-
-  if (
-    !firstName ||
-    !lastName ||
-    !email ||
-    !phone ||
-    !street ||
-    !city ||
-    !state ||
-    !zipCode ||
-    !password ||
-    !confirmPassword
-  ) {
-    showError("Please complete all required fields.");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    showError("Passwords do not match.");
-    return;
-  }
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const email = await resolveEmail(identifier);
 
-    const user = userCredential.user;
+    await signInWithEmailAndPassword(auth, email, password);
 
-    await updateProfile(user, {
-      displayName: `${firstName} ${lastName}`,
-    });
-
-    await setDoc(doc(db, "Customers", user.uid), {
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      phone: phone,
-      created_at: serverTimestamp(),
-      customer_type: "standard",
-      preferred_contact_method: "email",
-      addresses: [
-        {
-          street: street,
-          city: city,
-          state: state,
-          zip_code: zipCode,
-          unit_number: unitNumber || "",
-        },
-      ],
-    });
-
+    alert("Login successful!");
     window.location.href = "homepage.html";
   } catch (error) {
-    console.error("Signup error code:", error.code);
-    console.error("Signup error message:", error.message);
-    console.error("Full signup error:", error);
-    showError(error.message || getFriendlyErrorMessage(error.code));
+    console.error("Login error:", error);
+
+    if (
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+    ) {
+      showError("Invalid username/email or password.");
+    } else {
+      showError(error.message);
+    }
   }
 });
+
+async function resolveEmail(identifier) {
+  const trimmed = identifier.trim();
+
+  if (trimmed.includes("@")) {
+    return trimmed;
+  }
+
+  const usernameRef = doc(db, "usernames", trimmed.toLowerCase());
+  const usernameSnap = await getDoc(usernameRef);
+
+  if (!usernameSnap.exists()) {
+    throw new Error("No account found with that username.");
+  }
+
+  return usernameSnap.data().email;
+}
