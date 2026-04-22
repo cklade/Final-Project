@@ -13,7 +13,7 @@ const signupForm = document.getElementById("signupForm");
 const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.getElementById("lastName");
 const usernameInput = document.getElementById("username");
-const loginIdentifierInput = document.getElementById("loginIdentifier");
+const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");
 const streetInput = document.getElementById("street");
 const unitNumberInput = document.getElementById("unitNumber");
@@ -26,6 +26,7 @@ const errorMessage = document.getElementById("errorMessage");
 const errorText = document.getElementById("errorText");
 
 function showError(message) {
+  console.log("SHOW ERROR:", message);
   errorText.textContent = message;
   errorMessage.style.display = "block";
 }
@@ -37,61 +38,112 @@ function hideError() {
 
 window.hideError = hideError;
 
-function getFriendlyErrorMessage(errorCode) {
-  switch (errorCode) {
-    case "auth/email-already-in-use":
-      return "That email is already being used.";
-    case "auth/invalid-email":
-      return "Please enter a valid email address.";
-    case "auth/weak-password":
-      return "Password must be at least 6 characters.";
-    default:
-      return "Signup failed. Please try again.";
-  }
-}
+console.log("signup.js loaded");
+console.log({ signupForm, usernameInput, emailInput, passwordInput });
 
-loginForm.addEventListener("submit", async (e) => {
+signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  console.log("submit fired");
   hideError();
 
-  const identifier = loginIdentifierInput.value.trim();
+  const firstName = firstNameInput.value.trim();
+  const lastName = lastNameInput.value.trim();
+  const username = usernameInput.value.trim().toLowerCase();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const street = streetInput.value.trim();
+  const unitNumber = unitNumberInput.value.trim();
+  const city = cityInput.value.trim();
+  const state = stateInput.value.trim();
+  const zipCode = zipCodeInput.value.trim();
   const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+
+  console.log("form values gathered", { username, email });
+
+  if (!username) {
+    showError("Please enter a username.");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showError("Passwords do not match.");
+    return;
+  }
 
   try {
-    const email = await resolveEmail(identifier);
+    console.log("checking username...");
+    const usernameRef = doc(db, "usernames", username);
+    const usernameSnap = await getDoc(usernameRef);
 
-    await signInWithEmailAndPassword(auth, email, password);
+    if (usernameSnap.exists()) {
+      showError("That username is already taken.");
+      return;
+    }
 
-    alert("Login successful!");
+    console.log("creating auth user...");
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    console.log("auth user created", user.uid);
+
+    await updateProfile(user, {
+      displayName: username,
+    });
+
+    console.log("writing customer doc...");
+    await setDoc(doc(db, "Customers", user.uid), {
+      uid: user.uid,
+      firstName,
+      lastName,
+      username,
+      email,
+      phone,
+      address: {
+        street,
+        unitNumber,
+        city,
+        state,
+        zipCode,
+      },
+      createdAt: new Date().toISOString(),
+    });
+
+    console.log("writing username doc...");
+    await setDoc(doc(db, "usernames", username), {
+      uid: user.uid,
+      email,
+    });
+
+    console.log("success");
+    alert("Account created successfully!");
     window.location.href = "homepage.html";
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("FULL SIGNUP ERROR:", error);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
 
-    if (
-      error.code === "auth/invalid-credential" ||
-      error.code === "auth/wrong-password" ||
-      error.code === "auth/user-not-found"
-    ) {
-      showError("Invalid username/email or password.");
-    } else {
-      showError(error.message);
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        showError("That email is already being used.");
+        break;
+      case "auth/invalid-email":
+        showError("Please enter a valid email address.");
+        break;
+      case "auth/weak-password":
+        showError("Password must be at least 6 characters.");
+        break;
+      case "auth/operation-not-allowed":
+        showError("Email/password sign-in is not enabled in Firebase.");
+        break;
+      case "permission-denied":
+        showError("Firestore rules are blocking writes.");
+        break;
+      default:
+        showError(error.message || "Signup failed. Please try again.");
     }
   }
 });
-
-async function resolveEmail(identifier) {
-  const trimmed = identifier.trim();
-
-  if (trimmed.includes("@")) {
-    return trimmed;
-  }
-
-  const usernameRef = doc(db, "usernames", trimmed.toLowerCase());
-  const usernameSnap = await getDoc(usernameRef);
-
-  if (!usernameSnap.exists()) {
-    throw new Error("No account found with that username.");
-  }
-
-  return usernameSnap.data().email;
-}
