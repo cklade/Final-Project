@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Bookings - Klade Photography</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
+        >
+          <h1 class="title is-2 has-text-black mb-0">Admin Booking Requests</h1>
+          <div class="cart-status-box">Admin Dashboard</div>
+        </div>
+
+        <nav
+          class="navbar custom-navbar mb-6"
+          role="navigation"
+          aria-label="main navigation"
+        >
+          <div class="navbar-menu is-active">
+            <div class="navbar-start nav-center">
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="homepage.html"
+                >Home</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="about.html"
+                >About</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="portfolio.html"
+                >Portfolio</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="booking.html"
+                >Book Appointment</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="review.html"
+                >Reviews</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="contact.html"
+                >Contact</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="login.html"
+                >Login</a
+              >
+            </div>
+          </div>
+        </nav>
+
+        <div
+          id="adminBookingsMessage"
+          class="notification is-light is-hidden"
+        ></div>
+
+        <section class="home-info-box mb-5">
+          <h2 class="title is-4 has-text-black mb-3">Incoming Requests</h2>
+          <p>
+            Review submitted booking requests, update their status, and keep
+            track of upcoming sessions.
+          </p>
+        </section>
+
+        <section>
+          <div id="bookingsContainer" class="columns is-multiline"></div>
+        </section>
+
+        <footer class="has-text-centered mt-6">
+          <p>&copy; 2026 Klade Photography</p>
+        </footer>
+      </div>
+    </section>
+
+    <script type="module" src="admin-guard.js"></script>
+    <script type="module" src="admin-bookings.js"></script>
+    <script type="module" src="auth-ui.js"></script>
+  </body>
+</html>
