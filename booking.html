@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -85,22 +85,45 @@
                 and will contact you soon to confirm your appointment details.
               </div>
 
-              <form>
+              <div
+                id="bookingSuccessMessage"
+                class="booking-success-box mb-5 is-hidden"
+              >
+                Thank you for your request. We have received your information
+                and will contact you soon to confirm your appointment details.
+              </div>
+
+              <div
+                id="bookingErrorMessage"
+                class="notification is-danger is-light mb-5 is-hidden"
+              >
+                Something went wrong. Please try again.
+              </div>
+
+              <form id="bookingForm">
                 <div class="field">
                   <label class="label has-text-black">Session Type</label>
                   <div class="control">
                     <div class="select is-fullwidth">
-                      <select>
-                        <option>Select a session type</option>
-                        <option>Single Portrait</option>
-                        <option>Graduation Photos</option>
-                        <option>Family Portraits</option>
-                        <option>Couples Session</option>
-                        <option>Group Photos</option>
-                        <option>Event Photography</option>
-                        <option>Professional Headshots</option>
-                        <option>Car Photography</option>
-                        <option>Other</option>
+                      <select id="sessionType" required>
+                        <option value="">Select a session type</option>
+                        <option value="Single Portrait">Single Portrait</option>
+                        <option value="Graduation Photos">
+                          Graduation Photos
+                        </option>
+                        <option value="Family Portraits">
+                          Family Portraits
+                        </option>
+                        <option value="Couples Session">Couples Session</option>
+                        <option value="Group Photos">Group Photos</option>
+                        <option value="Event Photography">
+                          Event Photography
+                        </option>
+                        <option value="Professional Headshots">
+                          Professional Headshots
+                        </option>
+                        <option value="Car Photography">Car Photography</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
@@ -112,14 +135,13 @@
                       <label class="label has-text-black">Preferred Time</label>
                       <div class="control">
                         <div class="select is-fullwidth">
-                          <select id="hour-select">
+                          <select id="hour-select" required>
                             <option value="">Select Hour</option>
-                            <!-- Generate options for hours 0-23 -->
                             <script>
                               for (let i = 8; i < 20; i++) {
                                 const hour = i < 10 ? "0" + i : i;
                                 document.write(
-                                  `<option value="${hour}">${hour}:00</option>`
+                                  `<option value="${hour}">${hour}:00</option>`,
                                 );
                               }
                             </script>
@@ -128,18 +150,19 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="column">
                     <div class="field">
                       <label class="label has-text-black">Minutes</label>
                       <div class="control">
                         <div class="select is-fullwidth">
-                          <select id="minute-select">
+                          <select id="minute-select" required>
                             <option value="">Select Minutes</option>
                             <script>
                               for (let i = 0; i < 60; i += 5) {
                                 const minute = i < 10 ? "0" + i : i;
                                 document.write(
-                                  `<option value="${minute}">${minute}</option>`
+                                  `<option value="${minute}">${minute}</option>`,
                                 );
                               }
                             </script>
@@ -154,11 +177,11 @@
                   <label class="label has-text-black">Preferred Location</label>
                   <div class="control">
                     <input
+                      id="preferredLocation"
                       class="input booking-input"
                       type="text"
-                      required
-                      type="text"
                       placeholder="Enter your preferred location"
+                      required
                     />
                   </div>
                 </div>
@@ -169,11 +192,11 @@
                       <label class="label has-text-black">Full Name</label>
                       <div class="control">
                         <input
+                          id="fullName"
                           class="input booking-input"
                           type="text"
-                          required
-                          type="text"
                           placeholder="Enter your full name"
+                          required
                         />
                       </div>
                     </div>
@@ -184,11 +207,11 @@
                       <label class="label has-text-black">Phone Number</label>
                       <div class="control">
                         <input
+                          id="phoneNumber"
                           class="input booking-input"
-                          type="text"
-                          required
                           type="tel"
                           placeholder="Enter your phone number"
+                          required
                         />
                       </div>
                     </div>
@@ -199,11 +222,11 @@
                   <label class="label has-text-black">Email Address</label>
                   <div class="control">
                     <input
+                      id="emailAddress"
                       class="input booking-input"
-                      type="text"
-                      required
                       type="email"
                       placeholder="Enter your email address"
+                      required
                     />
                   </div>
                 </div>
@@ -212,6 +235,7 @@
                   <label class="label has-text-black">Additional Notes</label>
                   <div class="control">
                     <textarea
+                      id="additionalNotes"
                       class="textarea booking-textarea"
                       placeholder="Tell us about your session, preferred location, group size, or any special requests"
                     ></textarea>
@@ -220,7 +244,11 @@
 
                 <div class="field mt-5">
                   <div class="control">
-                    <button class="button booking-button" type="submit">
+                    <button
+                      id="bookingSubmitButton"
+                      class="button booking-button"
+                      type="submit"
+                    >
                       Submit Request
                     </button>
                   </div>
@@ -240,5 +268,7 @@
       </div>
     </section>
     <script type="module" src="auth.js"></script>
+    <script type="module" src="booking.js"></script>
+    <script type="module" src="auth-ui.js"></script>
   </body>
 </html>
