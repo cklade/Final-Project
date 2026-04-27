@@ -51,7 +51,6 @@ loginForm.addEventListener("submit", async (e) => {
     const email = await resolveEmail(identifier);
     await signInWithEmailAndPassword(auth, email, password);
 
-    alert("Login successful!");
     window.location.href = "homepage.html";
   } catch (error) {
     console.error("Login error:", error);
