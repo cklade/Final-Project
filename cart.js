@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  initializeReviews();
-  initializeContactForm();
-  initializeBookingForm();
   initializePhotoCart();
 });
 
@@ -67,18 +64,16 @@ function initializePhotoCart() {
         return;
       }
 
-      cart.push({ name, image });
-      saveCart(cart);
-      updateCartCount();
+     cart.push({ name, image });
+saveCart(cart);
+updateCartCount();
 
-      const originalText = button.textContent;
-      button.textContent = "Added!";
-      button.disabled = true;
+button.textContent = "Added!";
+button.disabled = true;
 
-      setTimeout(function () {
-        button.textContent = originalText;
-        button.disabled = false;
-      }, 1200);
+setTimeout(function () {
+  window.location.href = "cart.html";
+}, 800);
     });
   });
 

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - Klade Photography</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      .cart-item-card {
+        background: white;
+        border: 4px solid #1f0202;
+        border-radius: 16px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .cart-item-card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22);
+      }
+
+      .cart-item-thumb {
+        width: 110px;
+        height: 85px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid rgb(79, 26, 26);
+        flex-shrink: 0;
+      }
+
+      .cart-item-name {
+        font-size: 1.05rem;
+        font-weight: bold;
+        flex-grow: 1;
+      }
+
+      .remove-btn {
+        background: none;
+        border: 2px solid rgb(79, 26, 26);
+        color: rgb(79, 26, 26);
+        border-radius: 8px;
+        padding: 0.35rem 0.75rem;
+        font-family: "Times New Roman", Times, serif;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        flex-shrink: 0;
+      }
+
+      .remove-btn:hover {
+        background: rgb(79, 26, 26);
+        color: white;
+      }
+
+      .cart-summary-box {
+        background: white;
+        border: 4px solid #1f0202;
+        border-radius: 18px;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        padding: 2rem;
+        position: sticky;
+        top: 1.5rem;
+      }
+
+      .cart-empty-box {
+        background: white;
+        border: 4px solid #1f0202;
+        border-radius: 18px;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .venmo-qr-placeholder {
+        width: 160px;
+        height: 160px;
+        border: 3px dashed rgb(79, 26, 26);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 0.9rem;
+        color: rgb(79, 26, 26);
+        font-weight: bold;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      #loginGate {
+        display: none;
+      }
+
+      #cartContent {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container is-max-desktop">
+
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
+        >
+          <h1 class="title is-2 has-text-black mb-0">Your Cart</h1>
+          <div class="cart-status-box">
+            Cart: <span id="cartCount">0</span> photo(s)
+          </div>
+        </div>
+
+        <nav
+          class="navbar custom-navbar mb-6"
+          role="navigation"
+          aria-label="main navigation"
+        >
+          <div class="navbar-menu is-active">
+            <div class="navbar-start nav-center">
+              <a class="navbar-item has-text-white has-text-weight-bold" href="homepage.html">Home</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="about.html">About</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="portfolio.html">Portfolio</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="booking.html">Book Appointment</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="review.html">Reviews</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="contact.html">Contact</a>
+              <a class="navbar-item has-text-white has-text-weight-bold" href="login.html">Login</a>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Shown when NOT logged in -->
+        <div id="loginGate">
+          <div class="cart-empty-box">
+            <p class="title is-4 has-text-black mb-3">Please log in to view your cart</p>
+            <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7;">
+              You need an account to save and purchase photos. Log in or sign up to continue.
+            </p>
+            <div class="buttons is-centered">
+              <a href="login.html" class="button hero-button-primary">Log In</a>
+              <a href="signup.html" class="button hero-button-secondary">Sign Up</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shown when logged in -->
+        <div id="cartContent">
+
+          <div id="emptyCart" style="display: none;">
+            <div class="cart-empty-box">
+              <p class="title is-4 has-text-black mb-3">Your cart is empty</p>
+              <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7;">
+                Browse the portfolio and add photos you love.
+              </p>
+              <a href="portfolio.html" class="button hero-button-primary">Go to Portfolio</a>
+            </div>
+          </div>
+
+          <div id="populatedCart" style="display: none;">
+            <div class="columns is-variable is-6">
+
+              <div class="column is-7">
+                <h2 class="title is-4 has-text-black mb-4">Selected Photos</h2>
+                <div id="cartItemsList"></div>
+                <div class="mt-4">
+                  <button id="clearCartBtn" class="button hero-button-secondary">
+                    Clear Cart
+                  </button>
+                </div>
+              </div>
+
+              <div class="column is-5">
+                <div class="cart-summary-box">
+                  <h2 class="title is-4 has-text-black mb-4">Order Summary</h2>
+                  <p class="mb-2" style="font-size: 1.05rem;">
+                    Photos selected: <strong id="summaryCount">0</strong>
+                  </p>
+                  <hr style="border-color: rgb(79,26,26); margin: 1rem 0;" />
+                  <h3 class="title is-5 has-text-black mb-3">Ready to purchase?</h3>
+                  <p class="mb-4" style="font-size: 1rem; line-height: 1.6;">
+                    Complete your payment via Venmo. Scan the QR code or tap the button below.
+                    Your photos will be delivered after payment is confirmed.
+                  </p>
+                  <div class="venmo-qr-placeholder">
+                    Venmo QR Code<br />(replace with real QR image)
+                  </div>
+                  <p class="has-text-centered mb-4" style="font-size: 0.95rem; color: rgb(79,26,26); font-weight: bold;">
+                    @klade-photography
+                  </p>
+                  
+                    href="https://venmo.com/klade-photography"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button hero-button-primary is-fullwidth mb-3"
+                  >
+                    Pay with Venmo
+                  </a>
+                  <p class="has-text-centered" style="font-size: 0.9rem; line-height: 1.5;">
+                    After paying, email us at <strong>klade.photography@gmail.com</strong>
+                    with your username and we will deliver your photos.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <section class="cta-strip mt-6 mb-6" id="ctaStrip" style="display: none;">
+          <div class="columns is-vcentered">
+            <div class="column is-8">
+              <h2 class="title is-4 has-text-black mb-2">Want to add more photos?</h2>
+              <p>Head back to the portfolio to keep browsing.</p>
+            </div>
+            <div class="column is-4 has-text-right-desktop has-text-left-tablet">
+              <a href="portfolio.html" class="button hero-button-primary">Back to Portfolio</a>
+            </div>
+          </div>
+        </section>
+
+        <footer class="has-text-centered mt-6">
+          <p>&copy; 2025 Klade Photography</p>
+        </footer>
+      </div>
+    </section>
+
+    <script>
+      function getCart() {
+        try {
+          return JSON.parse(localStorage.getItem("kladePhotoCart")) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveCart(cart) {
+        localStorage.setItem("kladePhotoCart", JSON.stringify(cart));
+      }
+
+      function updateCartCountBadge() {
+        const badge = document.getElementById("cartCount");
+        if (badge) badge.textContent = getCart().length;
+      }
+
+      function renderCart() {
+        const cart = getCart();
+        const listEl = document.getElementById("cartItemsList");
+        const summaryCount = document.getElementById("summaryCount");
+        const emptyCart = document.getElementById("emptyCart");
+        const populatedCart = document.getElementById("populatedCart");
+        const ctaStrip = document.getElementById("ctaStrip");
+
+        updateCartCountBadge();
+
+        if (cart.length === 0) {
+          emptyCart.style.display = "block";
+          populatedCart.style.display = "none";
+          ctaStrip.style.display = "none";
+          return;
+        }
+
+        emptyCart.style.display = "none";
+        populatedCart.style.display = "block";
+        ctaStrip.style.display = "block";
+        summaryCount.textContent = cart.length;
+
+        listEl.innerHTML = "";
+        cart.forEach(function (item, index) {
+          const card = document.createElement("div");
+          card.className = "cart-item-card";
+
+          const img = document.createElement("img");
+          img.src = item.image;
+          img.alt = item.name;
+          img.className = "cart-item-thumb";
+
+          const name = document.createElement("span");
+          name.className = "cart-item-name";
+          name.textContent = item.name;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "remove-btn";
+          removeBtn.textContent = "Remove";
+          removeBtn.addEventListener("click", function () {
+            const updated = getCart().filter(function (_, i) {
+              return i !== index;
+            });
+            saveCart(updated);
+            renderCart();
+          });
+
+          card.appendChild(img);
+          card.appendChild(name);
+          card.appendChild(removeBtn);
+          listEl.appendChild(card);
+        });
+      }
+
+      document.getElementById("clearCartBtn").addEventListener("click", function () {
+        if (confirm("Are you sure you want to clear your cart?")) {
+          saveCart([]);
+          renderCart();
+        }
+      });
+    </script>
+
+    <script type="module">
+      import { auth } from "./app.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      const loginGate = document.getElementById("loginGate");
+      const cartContent = document.getElementById("cartContent");
+
+      onAuthStateChanged(auth, function (user) {
+        if (user) {
+          loginGate.style.display = "none";
+          cartContent.style.display = "block";
+          renderCart();
+        } else {
+          loginGate.style.display = "block";
+          cartContent.style.display = "none";
+        }
+      });
+    </script>
+
+    <script type="module" src="auth.js"></script>
+  </body>
+</html>
