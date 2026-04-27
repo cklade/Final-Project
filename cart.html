@@ -111,7 +111,6 @@
   <body>
     <section class="section">
       <div class="container is-max-desktop">
-
         <div
           class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
         >
@@ -128,13 +127,41 @@
         >
           <div class="navbar-menu is-active">
             <div class="navbar-start nav-center">
-              <a class="navbar-item has-text-white has-text-weight-bold" href="homepage.html">Home</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="about.html">About</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="portfolio.html">Portfolio</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="booking.html">Book Appointment</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="review.html">Reviews</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="contact.html">Contact</a>
-              <a class="navbar-item has-text-white has-text-weight-bold" href="login.html">Login</a>
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="homepage.html"
+                >Home</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="about.html"
+                >About</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="portfolio.html"
+                >Portfolio</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="booking.html"
+                >Book Appointment</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="review.html"
+                >Reviews</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="contact.html"
+                >Contact</a
+              >
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="login.html"
+                >Login</a
+              >
             </div>
           </div>
         </nav>
@@ -142,38 +169,46 @@
         <!-- Shown when NOT logged in -->
         <div id="loginGate">
           <div class="cart-empty-box">
-            <p class="title is-4 has-text-black mb-3">Please log in to view your cart</p>
-            <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7;">
-              You need an account to save and purchase photos. Log in or sign up to continue.
+            <p class="title is-4 has-text-black mb-3">
+              Please log in to view your cart
+            </p>
+            <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7">
+              You need an account to save and purchase photos. Log in or sign up
+              to continue.
             </p>
             <div class="buttons is-centered">
               <a href="login.html" class="button hero-button-primary">Log In</a>
-              <a href="signup.html" class="button hero-button-secondary">Sign Up</a>
+              <a href="signup.html" class="button hero-button-secondary"
+                >Sign Up</a
+              >
             </div>
           </div>
         </div>
 
         <!-- Shown when logged in -->
         <div id="cartContent">
-
-          <div id="emptyCart" style="display: none;">
+          <div id="emptyCart" style="display: none">
             <div class="cart-empty-box">
               <p class="title is-4 has-text-black mb-3">Your cart is empty</p>
-              <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7;">
+              <p class="mb-5" style="font-size: 1.05rem; line-height: 1.7">
                 Browse the portfolio and add photos you love.
               </p>
-              <a href="portfolio.html" class="button hero-button-primary">Go to Portfolio</a>
+              <a href="portfolio.html" class="button hero-button-primary"
+                >Go to Portfolio</a
+              >
             </div>
           </div>
 
-          <div id="populatedCart" style="display: none;">
+          <div id="populatedCart" style="display: none">
             <div class="columns is-variable is-6">
-
               <div class="column is-7">
                 <h2 class="title is-4 has-text-black mb-4">Selected Photos</h2>
                 <div id="cartItemsList"></div>
                 <div class="mt-4">
-                  <button id="clearCartBtn" class="button hero-button-secondary">
+                  <button
+                    id="clearCartBtn"
+                    class="button hero-button-secondary"
+                  >
                     Clear Cart
                   </button>
                 </div>
@@ -182,22 +217,33 @@
               <div class="column is-5">
                 <div class="cart-summary-box">
                   <h2 class="title is-4 has-text-black mb-4">Order Summary</h2>
-                  <p class="mb-2" style="font-size: 1.05rem;">
+                  <p class="mb-2" style="font-size: 1.05rem">
                     Photos selected: <strong id="summaryCount">0</strong>
                   </p>
-                  <hr style="border-color: rgb(79,26,26); margin: 1rem 0;" />
-                  <h3 class="title is-5 has-text-black mb-3">Ready to purchase?</h3>
-                  <p class="mb-4" style="font-size: 1rem; line-height: 1.6;">
-                    Complete your payment via Venmo. Scan the QR code or tap the button below.
-                    Your photos will be delivered after payment is confirmed.
+                  <hr style="border-color: rgb(79, 26, 26); margin: 1rem 0" />
+                  <h3 class="title is-5 has-text-black mb-3">
+                    Ready to purchase?
+                  </h3>
+                  <p class="mb-4" style="font-size: 1rem; line-height: 1.6">
+                    Complete your payment via Venmo. Scan the QR code or tap the
+                    button below. Your photos will be delivered after payment is
+                    confirmed.
                   </p>
                   <div class="venmo-qr-placeholder">
                     Venmo QR Code<br />(replace with real QR image)
                   </div>
-                  <p class="has-text-centered mb-4" style="font-size: 0.95rem; color: rgb(79,26,26); font-weight: bold;">
+                  <p
+                    class="has-text-centered mb-4"
+                    style="
+                      font-size: 0.95rem;
+                      color: rgb(79, 26, 26);
+                      font-weight: bold;
+                    "
+                  >
                     @klade-photography
                   </p>
-                  
+
+                  <a
                     href="https://venmo.com/klade-photography"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -205,25 +251,38 @@
                   >
                     Pay with Venmo
                   </a>
-                  <p class="has-text-centered" style="font-size: 0.9rem; line-height: 1.5;">
-                    After paying, email us at <strong>klade.photography@gmail.com</strong>
+                  <p
+                    class="has-text-centered"
+                    style="font-size: 0.9rem; line-height: 1.5"
+                  >
+                    After paying, email us at
+                    <strong>klade.photography@gmail.com</strong>
                     with your username and we will deliver your photos.
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
 
-        <section class="cta-strip mt-6 mb-6" id="ctaStrip" style="display: none;">
+        <section
+          class="cta-strip mt-6 mb-6"
+          id="ctaStrip"
+          style="display: none"
+        >
           <div class="columns is-vcentered">
             <div class="column is-8">
-              <h2 class="title is-4 has-text-black mb-2">Want to add more photos?</h2>
+              <h2 class="title is-4 has-text-black mb-2">
+                Want to add more photos?
+              </h2>
               <p>Head back to the portfolio to keep browsing.</p>
             </div>
-            <div class="column is-4 has-text-right-desktop has-text-left-tablet">
-              <a href="portfolio.html" class="button hero-button-primary">Back to Portfolio</a>
+            <div
+              class="column is-4 has-text-right-desktop has-text-left-tablet"
+            >
+              <a href="portfolio.html" class="button hero-button-primary"
+                >Back to Portfolio</a
+              >
             </div>
           </div>
         </section>
@@ -306,12 +365,14 @@
         });
       }
 
-      document.getElementById("clearCartBtn").addEventListener("click", function () {
-        if (confirm("Are you sure you want to clear your cart?")) {
-          saveCart([]);
-          renderCart();
-        }
-      });
+      document
+        .getElementById("clearCartBtn")
+        .addEventListener("click", function () {
+          if (confirm("Are you sure you want to clear your cart?")) {
+            saveCart([]);
+            renderCart();
+          }
+        });
     </script>
 
     <script type="module">
