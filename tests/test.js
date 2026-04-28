@@ -29,25 +29,25 @@ const TEST_BOOKING = {
   notes: "Puppeteer automated booking test",
 };
 
-// // ─── tiny test runner ────────────────────────────────────────────────────────
-// let passed = 0;
-// let failed = 0;
+// ─── tiny test runner ────────────────────────────────────────────────────────
+let passed = 0;
+let failed = 0;
 
-// async function test(name, fn) {
-//   try {
-//     await fn();
-//     console.log(`  ✓  ${name}`);
-//     passed++;
-//   } catch (err) {
-//     console.error(`  ✗  ${name}`);
-//     console.error(`     ${err.message}`);
-//     failed++;
-//   }
-// }
+async function test(name, fn) {
+  try {
+    await fn();
+    console.log(`  ✓  ${name}`);
+    passed++;
+  } catch (err) {
+    console.error(`  ✗  ${name}`);
+    console.error(`     ${err.message}`);
+    failed++;
+  }
+}
 
-// function assert(condition, message) {
-//   if (!condition) throw new Error(message || "Assertion failed");
-// }
+function assert(condition, message) {
+  if (!condition) throw new Error(message || "Assertion failed");
+}
 
 // ─── main ────────────────────────────────────────────────────────────────────
 (async () => {
