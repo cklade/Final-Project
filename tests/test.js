@@ -20,6 +20,7 @@ const TEST_USER = {
 
 const TEST_BOOKING = {
   sessionType: "Single Portrait",
+  preferredDate: "2025-08-15",
   hour: "10",
   minute: "30",
   location: "Memorial Union Terrace, Madison WI",
@@ -123,6 +124,17 @@ function assert(condition, message) {
     await page.select("#sessionType", TEST_BOOKING.sessionType);
     const val = await page.$eval("#sessionType", el => el.value);
     assert(val === TEST_BOOKING.sessionType, `Got: "${val}"`);
+  });
+
+  await test("Sets preferred date", async () => {
+    await page.evaluate((date) => {
+      const input = document.getElementById("preferredDate");
+      input.value = date;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }, TEST_BOOKING.preferredDate);
+    const val = await page.$eval("#preferredDate", el => el.value);
+    assert(val === TEST_BOOKING.preferredDate, `Got: "${val}"`);
   });
 
   await test("Selects hour", async () => {

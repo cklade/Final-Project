@@ -9,7 +9,6 @@ const bookingForm = document.getElementById("bookingForm");
 const bookingSuccessMessage = document.getElementById("bookingSuccessMessage");
 const bookingErrorMessage = document.getElementById("bookingErrorMessage");
 const bookingSubmitButton = document.getElementById("bookingSubmitButton");
-const preferredDate = document.getElementById("preferredDate").value;
 
 function showSuccess(message) {
   bookingSuccessMessage.textContent = message;
@@ -33,6 +32,7 @@ bookingForm?.addEventListener("submit", async (event) => {
   resetMessages();
 
   const sessionType = document.getElementById("sessionType").value.trim();
+  const preferredDate = document.getElementById("preferredDate").value.trim(); // ← moved here
   const hour = document.getElementById("hour-select").value.trim();
   const minute = document.getElementById("minute-select").value.trim();
   const preferredLocation = document
@@ -69,6 +69,7 @@ bookingForm?.addEventListener("submit", async (event) => {
 
     await addDoc(collection(db, "bookings"), {
       sessionType,
+      preferredDate,
       preferredTime,
       preferredLocation,
       fullName,
