@@ -748,3 +748,25 @@ body {
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
   padding: 2rem;
 }
+.portfolio-price {
+  text-align: center;
+  font-weight: bold;
+  color: rgb(79, 26, 26);
+  font-size: 1rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+.payment-qr-box {
+  background-color: rgb(255, 244, 241);
+  border-left: 5px solid rgb(79, 26, 26);
+  padding: 1.25rem;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+.payment-qr-box img {
+  border: 3px solid #1f0202;
+  border-radius: 12px;
+  background: white;
+  padding: 0.5rem;
+}

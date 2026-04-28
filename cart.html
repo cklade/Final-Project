@@ -97,6 +97,14 @@
           <div id="cartItemsContainer" class="columns is-multiline"></div>
         </section>
 
+        <section class="home-info-box mb-6">
+          <h2 class="title is-4 has-text-black mb-3">Cart Total</h2>
+          <p class="is-size-5">
+            Total:
+            <strong><span id="cartTotalAmount">$0.00</span></strong>
+          </p>
+        </section>
+
         <section class="checkout-card mb-6">
           <h2 class="title is-4 has-text-black mb-4">Checkout Request</h2>
 
@@ -104,7 +112,8 @@
             id="checkoutSuccessMessage"
             class="notification is-success is-light is-hidden"
           >
-            Your checkout request has been submitted successfully.
+            Your checkout information has been submitted. Please scan the QR
+            code below to complete payment.
           </div>
 
           <div
@@ -165,11 +174,29 @@
                   class="button booking-button"
                   type="submit"
                 >
-                  Submit Checkout Request
+                  Continue to Payment
                 </button>
               </div>
             </div>
           </form>
+
+          <div id="paymentQrBox" class="payment-qr-box mt-5 is-hidden">
+            <h3 class="title is-5 has-text-black">Payment QR Code</h3>
+
+            <p class="mb-3">
+              Scan this QR code to complete payment. Please include your name in
+              the payment note so we can match it to your checkout request.
+            </p>
+
+            <p class="mb-3">
+              Amount due:
+              <strong><span id="paymentQrTotal">$0.00</span></strong>
+            </p>
+
+            <figure class="image is-128x128">
+              <img src="pictures/payment-qr.png" alt="Payment QR Code" />
+            </figure>
+          </div>
         </section>
 
         <section class="cta-strip mt-6 mb-6">

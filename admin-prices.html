@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Bookings - Klade Photography</title>
+    <title>Admin Prices - Klade Photography</title>
 
     <link
       rel="stylesheet"
@@ -18,15 +18,11 @@
         <div
           class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
         >
-          <h1 class="title is-2 has-text-black mb-0">Admin Booking Requests</h1>
+          <h1 class="title is-2 has-text-black mb-0">Admin Photo Prices</h1>
           <div class="cart-status-box">Admin Dashboard</div>
         </div>
 
-        <nav
-          class="navbar custom-navbar mb-6"
-          role="navigation"
-          aria-label="main navigation"
-        >
+        <nav class="navbar custom-navbar mb-6">
           <div class="navbar-menu is-active">
             <div class="navbar-start nav-center">
               <a
@@ -36,60 +32,44 @@
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="about.html"
-                >About</a
-              >
-              <a
-                class="navbar-item has-text-white has-text-weight-bold"
                 href="portfolio.html"
                 >Portfolio</a
               >
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
-                href="booking.html"
-                >Book Appointment</a
+                href="admin-bookings.html"
+                >Admin Bookings</a
               >
-              <a
-                class="navbar-item has-text-white has-text-weight-bold"
-                href="review.html"
-                >Reviews</a
-              >
-              <a
-                class="navbar-item has-text-white has-text-weight-bold"
-                href="contact.html"
-                >Contact</a
-              >
-              <a
-                class="navbar-item has-text-white has-text-weight-bold"
-                href="login.html"
-                >Login</a
-              >
-
               <a
                 class="navbar-item has-text-white has-text-weight-bold"
                 href="admin-prices.html"
+                >Admin Prices</a
               >
-                Admin Prices
-              </a>
             </div>
           </div>
         </nav>
 
         <div
-          id="adminBookingsMessage"
+          id="adminPricesMessage"
           class="notification is-light is-hidden"
         ></div>
 
         <section class="home-info-box mb-5">
-          <h2 class="title is-4 has-text-black mb-3">Incoming Requests</h2>
+          <h2 class="title is-4 has-text-black mb-3">Set Photo Prices</h2>
           <p>
-            Review submitted booking requests, update their status, and keep
-            track of upcoming sessions.
+            Enter prices for the photos shown on the portfolio page. These
+            prices will appear under each photo and be used during checkout.
           </p>
         </section>
 
-        <section>
-          <div id="bookingsContainer" class="columns is-multiline"></div>
+        <section class="checkout-card">
+          <form id="priceForm">
+            <div id="priceFields"></div>
+
+            <button class="button booking-button mt-4" type="submit">
+              Save Prices
+            </button>
+          </form>
         </section>
 
         <footer class="has-text-centered mt-6">
@@ -99,7 +79,7 @@
     </section>
 
     <script type="module" src="admin-guard.js"></script>
-    <script type="module" src="admin-bookings.js"></script>
+    <script type="module" src="admin-prices.js"></script>
     <script type="module" src="auth-ui.js"></script>
   </body>
 </html>

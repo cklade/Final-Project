@@ -1,278 +1,283 @@
-import { db, auth } from "./app.js";
+import { auth, db } from "./app.js";
 import {
   collection,
+  doc,
+  getDocs,
   addDoc,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", function () {
-  initializePhotoCart();
-  renderCartPage();
-  initializeCheckoutForm();
-});
+const CART_KEY = "kladeCart";
 
 function getCart() {
-  const savedCart = localStorage.getItem("kladePhotoCart");
-
-  if (!savedCart) return [];
-
-  try {
-    return JSON.parse(savedCart);
-  } catch (error) {
-    console.error("Could not parse cart data:", error);
-    return [];
-  }
+  const savedCart = localStorage.getItem(CART_KEY);
+  return savedCart ? JSON.parse(savedCart) : [];
 }
 
 function saveCart(cart) {
-  localStorage.setItem("kladePhotoCart", JSON.stringify(cart));
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+function formatPrice(price) {
+  return `$${Number(price || 0).toFixed(2)}`;
 }
 
 function updateCartCount() {
-  const cartCount = document.getElementById("cartCount");
-  if (!cartCount) return;
-
   const cart = getCart();
-  cartCount.textContent = cart.length;
+  const cartCount = document.getElementById("cartCount");
+
+  if (cartCount) {
+    cartCount.textContent = cart.length;
+  }
 }
 
-function photoAlreadyInCart(cart, imagePath) {
-  return cart.some(function (item) {
-    return item.image === imagePath;
-  });
+async function loadPortfolioPrices() {
+  const priceElements = document.querySelectorAll("[data-price-for]");
+  const addButtons = document.querySelectorAll(".add-to-cart-button");
+
+  if (priceElements.length === 0 && addButtons.length === 0) {
+    return;
+  }
+
+  try {
+    const snapshot = await getDocs(collection(db, "photoPrices"));
+    const prices = {};
+
+    snapshot.forEach((docSnap) => {
+      prices[docSnap.id] = docSnap.data();
+    });
+
+    priceElements.forEach((element) => {
+      const photoId = element.dataset.priceFor;
+      const priceData = prices[photoId];
+
+      if (priceData && typeof priceData.price === "number") {
+        element.textContent = formatPrice(priceData.price);
+      } else {
+        element.textContent = "Price not set";
+      }
+    });
+
+    addButtons.forEach((button) => {
+      const photoId = button.dataset.photoId;
+      const priceData = prices[photoId];
+
+      if (priceData && typeof priceData.price === "number") {
+        button.dataset.price = priceData.price;
+      } else {
+        button.dataset.price = 0;
+      }
+    });
+  } catch (error) {
+    console.error("Could not load portfolio prices:", error);
+  }
 }
 
-function initializePhotoCart() {
-  const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+function setupAddToCartButtons() {
+  const buttons = document.querySelectorAll(".add-to-cart-button");
 
-  addToCartButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const photoId = button.dataset.photoId;
       const name = button.dataset.name;
       const image = button.dataset.image;
-
-      if (!name || !image) return;
+      const price = Number(button.dataset.price || 0);
 
       const cart = getCart();
 
-      if (photoAlreadyInCart(cart, image)) {
-        const originalText = button.textContent;
-        button.textContent = "Already in Cart";
-        button.disabled = true;
+      const alreadyInCart = cart.some((item) => item.photoId === photoId);
 
-        setTimeout(function () {
-          button.textContent = originalText;
-          button.disabled = false;
-        }, 1200);
-
-        updateCartCount();
+      if (alreadyInCart) {
+        alert("This photo is already in your cart.");
         return;
       }
 
-      cart.push({ name, image });
+      cart.push({
+        photoId,
+        name,
+        image,
+        price,
+      });
+
       saveCart(cart);
       updateCartCount();
 
-      const originalText = button.textContent;
-      button.textContent = "Added!";
-      button.disabled = true;
-
-      setTimeout(function () {
-        button.textContent = originalText;
-        button.disabled = false;
-      }, 1200);
+      alert(`${name} added to cart.`);
     });
   });
-
-  updateCartCount();
 }
 
-function removeFromCart(imagePath) {
-  const cart = getCart().filter(function (item) {
-    return item.image !== imagePath;
-  });
-
-  saveCart(cart);
-  updateCartCount();
-  renderCartPage();
-}
-
-function clearCart() {
-  localStorage.removeItem("kladePhotoCart");
-  updateCartCount();
-  renderCartPage();
+function calculateCartTotal(cart) {
+  return cart.reduce((total, item) => {
+    return total + Number(item.price || 0);
+  }, 0);
 }
 
 function renderCartPage() {
   const cartItemsContainer = document.getElementById("cartItemsContainer");
-  const cartEmptyMessage = document.getElementById("cartEmptyMessage");
   const cartSummaryCount = document.getElementById("cartSummaryCount");
+  const cartEmptyMessage = document.getElementById("cartEmptyMessage");
   const clearCartButton = document.getElementById("clearCartButton");
-  const checkoutForm = document.getElementById("checkoutForm");
+  const cartTotalAmount = document.getElementById("cartTotalAmount");
 
   if (!cartItemsContainer) {
-    updateCartCount();
     return;
   }
 
   const cart = getCart();
+
   cartItemsContainer.innerHTML = "";
 
   if (cartSummaryCount) {
     cartSummaryCount.textContent = cart.length;
   }
 
-  if (!cart.length) {
-    cartEmptyMessage.classList.remove("is-hidden");
-    if (clearCartButton) clearCartButton.classList.add("is-hidden");
-    if (checkoutForm) checkoutForm.style.display = "none";
+  if (cartTotalAmount) {
+    cartTotalAmount.textContent = formatPrice(calculateCartTotal(cart));
+  }
+
+  if (cart.length === 0) {
+    cartEmptyMessage?.classList.remove("is-hidden");
+    clearCartButton?.classList.add("is-hidden");
     return;
   }
 
-  cartEmptyMessage.classList.add("is-hidden");
-  if (clearCartButton) clearCartButton.classList.remove("is-hidden");
-  if (checkoutForm) checkoutForm.style.display = "block";
+  cartEmptyMessage?.classList.add("is-hidden");
+  clearCartButton?.classList.remove("is-hidden");
 
-  cart.forEach(function (item) {
-    const column = document.createElement("div");
-    column.className = "column is-half-tablet is-one-third-desktop";
+  cart.forEach((item, index) => {
+    const itemCard = document.createElement("div");
+    itemCard.className = "column is-one-third-desktop is-half-tablet";
 
-    column.innerHTML = `
+    itemCard.innerHTML = `
       <div class="portfolio-card">
         <figure class="image portfolio-image">
           <img src="${item.image}" alt="${item.name}" />
         </figure>
+
         <p class="portfolio-label">${item.name}</p>
+        <p class="portfolio-price">${formatPrice(item.price)}</p>
+
         <div class="portfolio-card-actions">
-          <button
-            class="button is-danger remove-from-cart-button"
-            data-image="${item.image}"
-          >
+          <button class="button is-danger remove-cart-item" data-index="${index}">
             Remove
           </button>
         </div>
       </div>
     `;
 
-    cartItemsContainer.appendChild(column);
+    cartItemsContainer.appendChild(itemCard);
   });
 
-  const removeButtons = document.querySelectorAll(".remove-from-cart-button");
+  document.querySelectorAll(".remove-cart-item").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.index);
+      const updatedCart = getCart();
 
-  removeButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const image = button.dataset.image;
-      removeFromCart(image);
+      updatedCart.splice(index, 1);
+
+      saveCart(updatedCart);
+      updateCartCount();
+      renderCartPage();
     });
   });
 
-  if (clearCartButton) {
-    clearCartButton.onclick = clearCart;
-  }
+  clearCartButton?.addEventListener("click", () => {
+    localStorage.removeItem(CART_KEY);
+    updateCartCount();
+    renderCartPage();
+  });
 }
 
-function showCheckoutSuccess(message) {
-  const successBox = document.getElementById("checkoutSuccessMessage");
-  const errorBox = document.getElementById("checkoutErrorMessage");
-
-  if (successBox) {
-    successBox.textContent = message;
-    successBox.classList.remove("is-hidden");
-  }
-
-  if (errorBox) {
-    errorBox.classList.add("is-hidden");
-  }
-}
-
-function showCheckoutError(message) {
-  const successBox = document.getElementById("checkoutSuccessMessage");
-  const errorBox = document.getElementById("checkoutErrorMessage");
-
-  if (errorBox) {
-    errorBox.textContent = message;
-    errorBox.classList.remove("is-hidden");
-  }
-
-  if (successBox) {
-    successBox.classList.add("is-hidden");
-  }
-}
-
-function initializeCheckoutForm() {
+function setupCheckoutForm() {
   const checkoutForm = document.getElementById("checkoutForm");
-  if (!checkoutForm) return;
+  const checkoutSuccessMessage = document.getElementById(
+    "checkoutSuccessMessage",
+  );
+  const checkoutErrorMessage = document.getElementById("checkoutErrorMessage");
+  const paymentQrBox = document.getElementById("paymentQrBox");
 
-  const user = auth.currentUser;
-  const cart = getCart();
-
-  const emailInput = document.getElementById("checkoutEmail");
-  if (user?.email && emailInput) {
-    emailInput.value = user.email;
+  if (!checkoutForm) {
+    return;
   }
 
-  checkoutForm.addEventListener("submit", async function (event) {
+  checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const currentCart = getCart();
+    checkoutSuccessMessage?.classList.add("is-hidden");
+    checkoutErrorMessage?.classList.add("is-hidden");
+    paymentQrBox?.classList.add("is-hidden");
 
-    if (!currentCart.length) {
-      showCheckoutError("Your cart is empty.");
+    const user = auth.currentUser;
+
+    if (!user) {
+      if (checkoutErrorMessage) {
+        checkoutErrorMessage.textContent =
+          "Please log in before submitting a checkout request.";
+        checkoutErrorMessage.classList.remove("is-hidden");
+      }
+      return;
+    }
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+      if (checkoutErrorMessage) {
+        checkoutErrorMessage.textContent =
+          "Your cart is empty. Add photos before checking out.";
+        checkoutErrorMessage.classList.remove("is-hidden");
+      }
       return;
     }
 
     const fullName = document.getElementById("checkoutFullName").value.trim();
     const email = document.getElementById("checkoutEmail").value.trim();
     const notes = document.getElementById("checkoutNotes").value.trim();
-    const submitButton = document.getElementById("checkoutSubmitButton");
+    const total = calculateCartTotal(cart);
+    const paymentQrTotal = document.getElementById("paymentQrTotal");
 
-    const user = auth.currentUser;
-
-    if (!user) {
-      showCheckoutError("Please log in before submitting a checkout request.");
-      return;
+    if (paymentQrTotal) {
+      paymentQrTotal.textContent = formatPrice(total);
     }
-    if (!fullName || !email) {
-      showCheckoutError("Please fill out your name and email.");
-      return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
 
     try {
-      const currentUser = auth.currentUser;
-
       await addDoc(collection(db, "cartOrders"), {
-        userId: currentUser ? currentUser.uid : null,
-        userEmail: currentUser ? currentUser.email : email,
+        userId: user.uid,
+        userEmail: user.email,
         fullName,
         email,
         notes,
-        items: currentCart,
-        itemCount: currentCart.length,
-        status: "submitted",
+        items: cart,
+        total,
+        status: "pending",
         createdAt: serverTimestamp(),
       });
 
-      localStorage.removeItem("kladePhotoCart");
-      checkoutForm.reset();
-      if (currentUser?.email && emailInput) {
-        emailInput.value = currentUser.email;
-      }
+      checkoutSuccessMessage?.classList.remove("is-hidden");
+      paymentQrBox?.classList.remove("is-hidden");
 
+      checkoutForm.classList.add("is-hidden");
+
+      localStorage.removeItem(CART_KEY);
       updateCartCount();
       renderCartPage();
-      showCheckoutSuccess(
-        "Your checkout request has been submitted successfully.",
-      );
+      checkoutForm.reset();
     } catch (error) {
       console.error("Checkout error:", error);
-      showCheckoutError(
-        "Could not submit your checkout request. Please try again.",
-      );
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Submit Checkout Request";
+
+      if (checkoutErrorMessage) {
+        checkoutErrorMessage.textContent =
+          "Could not submit your checkout request.";
+        checkoutErrorMessage.classList.remove("is-hidden");
+      }
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  updateCartCount();
+  await loadPortfolioPrices();
+  setupAddToCartButtons();
+  renderCartPage();
+  setupCheckoutForm();
+});
