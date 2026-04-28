@@ -19,9 +19,9 @@
           class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
         >
           <h1 class="title is-2 has-text-black mb-0">Book an Appointment</h1>
-          <div class="cart-status-box">
+          <a href="cart.html" class="cart-status-box cart-link">
             Cart: <span id="cartCount">0</span> photo(s)
-          </div>
+          </a>
         </div>
         <nav
           class="navbar custom-navbar mb-6"
@@ -127,6 +127,18 @@
                         <option value="Other">Other</option>
                       </select>
                     </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label has-text-black">Preferred Date</label>
+                  <div class="control">
+                    <input
+                      id="preferredDate"
+                      class="input booking-input"
+                      type="date"
+                      required
+                    />
                   </div>
                 </div>
 

@@ -9,6 +9,7 @@ const bookingForm = document.getElementById("bookingForm");
 const bookingSuccessMessage = document.getElementById("bookingSuccessMessage");
 const bookingErrorMessage = document.getElementById("bookingErrorMessage");
 const bookingSubmitButton = document.getElementById("bookingSubmitButton");
+const preferredDate = document.getElementById("preferredDate").value;
 
 function showSuccess(message) {
   bookingSuccessMessage.textContent = message;
@@ -46,6 +47,7 @@ bookingForm?.addEventListener("submit", async (event) => {
 
   if (
     !sessionType ||
+    !preferredDate ||
     !hour ||
     !minute ||
     !preferredLocation ||

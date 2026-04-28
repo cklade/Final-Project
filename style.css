@@ -731,3 +731,20 @@ body {
     padding: 1.25rem;
   }
 }
+
+.cart-link {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cart-link:hover {
+  color: rgb(79, 26, 26);
+  transform: translateY(-1px);
+}
+.checkout-card {
+  background: white;
+  border: 4px solid #1f0202;
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+  padding: 2rem;
+}
