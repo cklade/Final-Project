@@ -1,14 +1,23 @@
 import { db, auth } from "./app.js";
+
 import {
   collection,
   addDoc,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 const bookingForm = document.getElementById("bookingForm");
 const bookingSuccessMessage = document.getElementById("bookingSuccessMessage");
 const bookingErrorMessage = document.getElementById("bookingErrorMessage");
 const bookingSubmitButton = document.getElementById("bookingSubmitButton");
+
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+});
 
 function showSuccess(message) {
   bookingSuccessMessage.textContent = message;
@@ -20,6 +29,28 @@ function showError(message) {
   bookingErrorMessage.textContent = message;
   bookingErrorMessage.classList.remove("is-hidden");
   bookingSuccessMessage.classList.add("is-hidden");
+
+  bookingErrorMessage.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}
+
+function showLoginRequiredMessage() {
+  bookingErrorMessage.innerHTML = `
+    You need to create an account or log in before creating a booking.
+    <br><br>
+    <a href="signup.html" class="button is-small is-link">Create Account</a>
+    <a href="login.html" class="button is-small is-light ml-2">Log In</a>
+  `;
+
+  bookingErrorMessage.classList.remove("is-hidden");
+  bookingSuccessMessage.classList.add("is-hidden");
+
+  bookingErrorMessage.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
 }
 
 function resetMessages() {
@@ -31,16 +62,24 @@ bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   resetMessages();
 
+  if (!currentUser) {
+    showLoginRequiredMessage();
+    return;
+  }
+
   const sessionType = document.getElementById("sessionType").value.trim();
-  const preferredDate = document.getElementById("preferredDate").value.trim(); // ← moved here
+  const preferredDate = document.getElementById("preferredDate").value.trim();
   const hour = document.getElementById("hour-select").value.trim();
   const minute = document.getElementById("minute-select").value.trim();
+
   const preferredLocation = document
     .getElementById("preferredLocation")
     .value.trim();
+
   const fullName = document.getElementById("fullName").value.trim();
   const phoneNumber = document.getElementById("phoneNumber").value.trim();
   const emailAddress = document.getElementById("emailAddress").value.trim();
+
   const additionalNotes = document
     .getElementById("additionalNotes")
     .value.trim();
@@ -65,8 +104,6 @@ bookingForm?.addEventListener("submit", async (event) => {
   bookingSubmitButton.textContent = "Submitting...";
 
   try {
-    const currentUser = auth.currentUser;
-
     await addDoc(collection(db, "bookings"), {
       sessionType,
       preferredDate,
@@ -76,8 +113,8 @@ bookingForm?.addEventListener("submit", async (event) => {
       phoneNumber,
       emailAddress,
       additionalNotes,
-      userId: currentUser ? currentUser.uid : null,
-      userEmail: currentUser ? currentUser.email : null,
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
       status: "pending",
       createdAt: serverTimestamp(),
     });
@@ -85,7 +122,7 @@ bookingForm?.addEventListener("submit", async (event) => {
     bookingForm.reset();
 
     showSuccess(
-      "Thank you for your request. Your booking information has been saved and we will contact you soon.",
+      "Thank you for your request. Your booking information has been saved and we will contact you soon."
     );
   } catch (error) {
     console.error("Error saving booking:", error);
