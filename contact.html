@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -111,7 +111,7 @@
               <div class="contact-form-box">
                 <h2 class="title is-4 has-text-black mb-4">Send a Message</h2>
 
-                <form>
+                <form id="contactForm">
                   <div class="columns is-multiline">
                     <div class="column is-half">
                       <div class="field">
@@ -120,7 +120,9 @@
                           <input
                             class="input custom-input"
                             type="text"
+                            id="contactFirstName"
                             placeholder="Enter your first name"
+                            required
                           />
                         </div>
                       </div>
@@ -133,7 +135,9 @@
                           <input
                             class="input custom-input"
                             type="text"
+                            id="contactLastName"
                             placeholder="Enter your last name"
+                            required
                           />
                         </div>
                       </div>
@@ -146,7 +150,9 @@
                           <input
                             class="input custom-input"
                             type="email"
+                            id="contactEmail"
                             placeholder="Enter your email address"
+                            required
                           />
                         </div>
                       </div>
@@ -159,7 +165,9 @@
                           <input
                             class="input custom-input"
                             type="tel"
+                            id="contactPhone"
                             placeholder="Enter your phone number"
+                            required
                           />
                         </div>
                       </div>
@@ -170,14 +178,26 @@
                         <label class="label has-text-black">Session Type</label>
                         <div class="control">
                           <div class="select is-fullwidth custom-select">
-                            <select>
-                              <option>Select a session type</option>
-                              <option>Portrait Session</option>
-                              <option>Graduation Session</option>
-                              <option>Family Photography</option>
-                              <option>Couples Session</option>
-                              <option>Event Photography</option>
-                              <option>Creative Lifestyle Shoot</option>
+                            <select id="contactSessionType" required>
+                              <option value="">Select a session type</option>
+                              <option value="Portrait Session">
+                                Portrait Session
+                              </option>
+                              <option value="Graduation Session">
+                                Graduation Session
+                              </option>
+                              <option value="Family Photography">
+                                Family Photography
+                              </option>
+                              <option value="Couples Session">
+                                Couples Session
+                              </option>
+                              <option value="Event Photography">
+                                Event Photography
+                              </option>
+                              <option value="Creative Lifestyle Shoot">
+                                Creative Lifestyle Shoot
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -190,8 +210,10 @@
                         <div class="control">
                           <textarea
                             class="textarea custom-input"
+                            id="contactMessage"
                             rows="6"
                             placeholder="Tell us about your session, event, or question"
+                            required
                           ></textarea>
                         </div>
                       </div>
@@ -262,6 +284,7 @@
         </footer>
       </div>
     </section>
+    <script type="module" src="contact.js"></script>
     <script type="module" src="auth.js"></script>
     <script type="module" src="cart.js"></script>
     <script type="module" src="auth-ui.js"></script>
