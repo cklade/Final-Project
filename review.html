@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -222,76 +222,7 @@
         </footer>
       </div>
     </section>
-
-    <script>
-      const reviewForm = document.getElementById("reviewForm");
-      const reviewsContainer = document.getElementById("reviewsContainer");
-
-      const defaultReviews = [
-        {
-          name: "Emily R.",
-          type: "Portrait Session",
-          rating: "★★★★★",
-          text: "Klade Photography made the entire session feel easy and natural. The photos came out better than I could have hoped for, and the final gallery looked so polished.",
-        },
-        {
-          name: "Jordan T.",
-          type: "Family Photography",
-          rating: "★★★★★",
-          text: "Very professional, very friendly, and incredibly talented. The photos captured genuine moments instead of feeling posed, which made them even more special.",
-        },
-      ];
-
-      function getReviews() {
-        const savedReviews = localStorage.getItem("kladeReviews");
-        return savedReviews ? JSON.parse(savedReviews) : defaultReviews;
-      }
-
-      function saveReviews(reviews) {
-        localStorage.setItem("kladeReviews", JSON.stringify(reviews));
-      }
-
-      function createReviewCard(review) {
-        return `
-        <div class="column is-half">
-          <div class="review-card">
-            <p class="reviews-stars mb-3">${review.rating}</p>
-            <p class="review-text mb-4">"${review.text}"</p>
-            <p class="review-name">${review.name}</p>
-            <p class="review-type">${review.type}</p>
-          </div>
-        </div>
-      `;
-      }
-
-      function renderReviews() {
-        const reviews = getReviews();
-        reviewsContainer.innerHTML = reviews
-          .slice()
-          .reverse()
-          .map(createReviewCard)
-          .join("");
-      }
-
-      reviewForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const name = document.getElementById("reviewName").value.trim();
-        const type = document.getElementById("reviewType").value;
-        const rating = document.getElementById("reviewRating").value;
-        const text = document.getElementById("reviewText").value.trim();
-
-        if (!name || !type || !rating || !text) return;
-
-        const reviews = getReviews();
-        reviews.push({ name, type, rating, text });
-        saveReviews(reviews);
-        renderReviews();
-        reviewForm.reset();
-      });
-
-      renderReviews();
-    </script>
+    <script type="module" src="review.js"></script>
     <script type="module" src="auth.js"></script>
     <script type="module" src="cart.js"></script>
     <script type="module" src="auth-ui.js"></script>
