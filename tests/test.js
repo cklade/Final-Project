@@ -20,6 +20,7 @@ const TEST_USER = {
 
 const TEST_BOOKING = {
   sessionType: "Single Portrait",
+  preferredDate: "2025-08-15",
   hour: "10",
   minute: "30",
   location: "Memorial Union Terrace, Madison WI",
@@ -49,7 +50,7 @@ function assert(condition, message) {
   if (!condition) throw new Error(message || "Assertion failed");
 }
 
-// ─── main ────────────────────────────────────────────────────────────────────
+// main 
 (async () => {
   console.log(`\nKlade Photography – Booking Flow Test`);
   console.log(`Base URL: ${BASE_URL}`);
@@ -57,14 +58,14 @@ function assert(condition, message) {
 
   const browser = await puppeteer.launch({
     headless: false,        // set to "new" to run silently
-    slowMo: 80,             // slows actions so you can watch
+    slowMo: 30,             // slows actions so you can watch
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   const page = await browser.newPage();
   page.setDefaultTimeout(15000);
 
-  // ── Step 1: Log in ─────────────────────────────────────────────────────────
+  // log in 
   console.log("\n── Step 1: Login ───────────────────────────────────────");
 
   await test("Login page loads", async () => {
@@ -90,7 +91,7 @@ function assert(condition, message) {
   });
 
   await test("User is shown as logged in on navbar", async () => {
-    // auth-ui.js adds a span with the user's name — wait for it
+    
     await page.waitForFunction(
       () => {
         const spans = [...document.querySelectorAll(".navbar-start span")];
@@ -102,7 +103,7 @@ function assert(condition, message) {
     assert(navText.toLowerCase().includes("ryan"), `Nav text: "${navText}"`);
   });
 
-  // ── Step 2: Navigate to booking page ───────────────────────────────────────
+  // navigate to booking page
   console.log("\n── Step 2: Navigate to Booking Page ───────────────────");
 
   await test("Navigates to booking page", async () => {
@@ -116,13 +117,24 @@ function assert(condition, message) {
     assert(form !== null, "#bookingForm not found on page");
   });
 
-  // ── Step 3: Fill out the booking form ──────────────────────────────────────
+  // fill out the booking form 
   console.log("\n── Step 3: Fill Out Booking Form ───────────────────────");
 
   await test("Selects session type", async () => {
     await page.select("#sessionType", TEST_BOOKING.sessionType);
     const val = await page.$eval("#sessionType", el => el.value);
     assert(val === TEST_BOOKING.sessionType, `Got: "${val}"`);
+  });
+
+  await test("Sets preferred date", async () => {
+    await page.evaluate((date) => {
+      const input = document.getElementById("preferredDate");
+      input.value = date;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }, TEST_BOOKING.preferredDate);
+    const val = await page.$eval("#preferredDate", el => el.value);
+    assert(val === TEST_BOOKING.preferredDate, `Got: "${val}"`);
   });
 
   await test("Selects hour", async () => {
@@ -167,7 +179,7 @@ function assert(condition, message) {
     assert(val === TEST_BOOKING.notes, `Got: "${val}"`);
   });
 
-  // ── Step 4: Submit and confirm ─────────────────────────────────────────────
+  // submit and confirm 
   console.log("\n── Step 4: Submit Booking ──────────────────────────────");
 
   await test("Submit button is enabled before submit", async () => {
@@ -178,7 +190,7 @@ function assert(condition, message) {
   await test("Clicks submit and shows success message", async () => {
     await page.click("#bookingSubmitButton");
 
-    // Wait for either success or error message to appear
+    // wait for either success or error message to appear
     await page.waitForFunction(
       () => {
         const success = document.getElementById("bookingSuccessMessage");
@@ -223,7 +235,7 @@ function assert(condition, message) {
     assert(fullName === "", `Full name should be cleared, got: "${fullName}"`);
   });
 
-  // ── Summary ────────────────────────────────────────────────────────────────
+ 
   await browser.close();
 
   console.log("\n" + "─".repeat(55));
