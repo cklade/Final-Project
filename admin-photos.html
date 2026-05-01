@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Photos - Klade Photography</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mb-5 is-flex-wrap-wrap"
+        >
+          <h1 class="title is-2 has-text-black mb-0">Admin Photo Uploads</h1>
+          <div class="cart-status-box">Admin Dashboard</div>
+        </div>
+
+        <nav class="navbar custom-navbar mb-6">
+          <div class="navbar-menu is-active">
+            <div class="navbar-start nav-center">
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="homepage.html"
+              >
+                Home
+              </a>
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="portfolio.html"
+              >
+                Portfolio
+              </a>
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="admin-bookings.html"
+              >
+                Admin Bookings
+              </a>
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="admin-prices.html"
+              >
+                Admin Prices
+              </a>
+              <a
+                class="navbar-item has-text-white has-text-weight-bold"
+                href="admin-photos.html"
+              >
+                Admin Photos
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        <div
+          id="adminPhotosMessage"
+          class="notification is-light is-hidden"
+        ></div>
+
+        <section class="home-info-box mb-5">
+          <h2 class="title is-4 has-text-black mb-3">
+            Upload Portfolio Photos
+          </h2>
+          <p>
+            Upload new photos here. They will be saved in Firebase Storage and
+            displayed on the public portfolio page.
+          </p>
+        </section>
+
+        <section class="checkout-card mb-6">
+          <form id="photoUploadForm">
+            <div class="field">
+              <label class="label has-text-black">Photo Name</label>
+              <div class="control">
+                <input
+                  id="photoName"
+                  class="input booking-input"
+                  type="text"
+                  placeholder="Example: Graduation Session"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-black">Price</label>
+              <div class="control">
+                <input
+                  id="photoPrice"
+                  class="input booking-input"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="Example: 25.00"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-black">Photo File</label>
+              <div class="control">
+                <input
+                  id="photoFile"
+                  class="input booking-input"
+                  type="file"
+                  accept="image/*"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              id="uploadPhotoButton"
+              class="button booking-button mt-4"
+              type="submit"
+            >
+              Upload Photo
+            </button>
+          </form>
+        </section>
+
+        <section class="home-info-box mb-5">
+          <h2 class="title is-4 has-text-black mb-3">Uploaded Photos</h2>
+          <p>These are the photos currently being pulled from Firebase.</p>
+        </section>
+
+        <section>
+          <div id="uploadedPhotosContainer" class="columns is-multiline"></div>
+        </section>
+
+        <footer class="has-text-centered mt-6">
+          <p>&copy; 2026 Klade Photography</p>
+        </footer>
+      </div>
+    </section>
+
+    <script type="module" src="admin-guard.js"></script>
+    <script type="module" src="admin-photos.js"></script>
+    <script type="module" src="auth-ui.js"></script>
+  </body>
+</html>
