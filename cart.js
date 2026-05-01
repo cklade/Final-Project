@@ -1,9 +1,10 @@
 import { auth, db } from "./app.js";
 import {
   collection,
-  doc,
   getDocs,
   addDoc,
+  query,
+  where,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -20,6 +21,49 @@ function saveCart(cart) {
 
 function formatPrice(price) {
   return `$${Number(price || 0).toFixed(2)}`;
+}
+
+function formatOrderDate(createdAt) {
+  if (!createdAt) {
+    return "Date unavailable";
+  }
+
+  let date;
+
+  if (createdAt.toDate) {
+    date = createdAt.toDate();
+  } else if (createdAt.seconds) {
+    date = new Date(createdAt.seconds * 1000);
+  } else {
+    date = new Date(createdAt);
+  }
+
+  if (Number.isNaN(date.getTime())) {
+    return "Date unavailable";
+  }
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function getOrderTime(createdAt) {
+  if (!createdAt) {
+    return 0;
+  }
+
+  if (createdAt.toDate) {
+    return createdAt.toDate().getTime();
+  }
+
+  if (createdAt.seconds) {
+    return createdAt.seconds * 1000;
+  }
+
+  const date = new Date(createdAt);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
 }
 
 function updateCartCount() {
@@ -189,6 +233,178 @@ function renderCartPage() {
   });
 }
 
+function renderOrderHistory(orders) {
+  const orderHistoryContainer = document.getElementById(
+    "orderHistoryContainer",
+  );
+  const orderHistoryMessage = document.getElementById("orderHistoryMessage");
+
+  if (!orderHistoryContainer) {
+    return;
+  }
+
+  orderHistoryContainer.innerHTML = "";
+
+  if (orderHistoryMessage) {
+    orderHistoryMessage.classList.add("is-hidden");
+    orderHistoryMessage.textContent = "";
+  }
+
+  if (orders.length === 0) {
+    if (orderHistoryMessage) {
+      orderHistoryMessage.textContent =
+        "You do not have any past checkout requests yet.";
+      orderHistoryMessage.className = "notification is-warning is-light";
+      orderHistoryMessage.classList.remove("is-hidden");
+    }
+    return;
+  }
+
+  orders.forEach((order) => {
+    const orderCard = document.createElement("div");
+    orderCard.className = "order-history-card mb-4";
+
+    const items = Array.isArray(order.items) ? order.items : [];
+    const itemList =
+      items.length > 0
+        ? items
+            .map((item) => {
+              return `
+                <li>
+                  <strong>${item.name || "Unnamed Photo"}</strong>
+                  <span class="order-item-price">
+                    ${formatPrice(item.price)}
+                  </span>
+                </li>
+              `;
+            })
+            .join("")
+        : "<li>No item details saved for this order.</li>";
+
+    orderCard.innerHTML = `
+      <div class="columns is-vcentered">
+        <div class="column is-8">
+          <h3 class="title is-5 has-text-black mb-2">
+            Order from ${formatOrderDate(order.createdAt)}
+          </h3>
+
+          <p class="mb-2">
+            <strong>Status:</strong>
+            <span class="booking-status-text">${order.status || "pending"}</span>
+          </p>
+
+          <p class="mb-2">
+            <strong>Name:</strong> ${order.fullName || "Name unavailable"}
+          </p>
+
+          <p class="mb-2">
+            <strong>Email:</strong> ${order.email || order.userEmail || "Email unavailable"}
+          </p>
+
+          ${
+            order.notes
+              ? `<p class="mb-3"><strong>Notes:</strong> ${order.notes}</p>`
+              : ""
+          }
+
+          <div class="order-items-box">
+            <p class="mb-2"><strong>Photos Ordered:</strong></p>
+            <ul class="order-history-list">
+              ${itemList}
+            </ul>
+          </div>
+        </div>
+
+        <div class="column is-4 has-text-centered">
+          <div class="order-total-box">
+            <p class="mb-1">Order Total</p>
+            <p class="order-total-text">${formatPrice(order.total)}</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    orderHistoryContainer.appendChild(orderCard);
+  });
+}
+
+async function loadOrderHistory() {
+  const orderHistoryMessage = document.getElementById("orderHistoryMessage");
+
+  const user = auth.currentUser;
+
+  if (!user) {
+    if (orderHistoryMessage) {
+      orderHistoryMessage.textContent =
+        "Please log in to view your order history.";
+      orderHistoryMessage.className = "notification is-warning is-light";
+      orderHistoryMessage.classList.remove("is-hidden");
+    }
+    return;
+  }
+
+  if (orderHistoryMessage) {
+    orderHistoryMessage.textContent = "Loading your past orders...";
+    orderHistoryMessage.className = "notification is-light";
+    orderHistoryMessage.classList.remove("is-hidden");
+  }
+
+  try {
+    const ordersQuery = query(
+      collection(db, "cartOrders"),
+      where("userId", "==", user.uid),
+    );
+
+    const snapshot = await getDocs(ordersQuery);
+
+    const orders = [];
+
+    snapshot.forEach((docSnap) => {
+      orders.push({
+        id: docSnap.id,
+        ...docSnap.data(),
+      });
+    });
+
+    orders.sort((a, b) => {
+      return getOrderTime(b.createdAt) - getOrderTime(a.createdAt);
+    });
+
+    renderOrderHistory(orders);
+  } catch (error) {
+    console.error("Could not load order history:", error);
+
+    if (orderHistoryMessage) {
+      orderHistoryMessage.textContent =
+        "Could not load order history. Check your Firebase rules and make sure this user is allowed to read their own cart orders.";
+      orderHistoryMessage.className = "notification is-danger is-light";
+      orderHistoryMessage.classList.remove("is-hidden");
+    }
+  }
+}
+
+function setupOrderHistoryControls() {
+  const orderHistoryButton = document.getElementById("orderHistoryButton");
+  const hideOrderHistoryButton = document.getElementById(
+    "hideOrderHistoryButton",
+  );
+  const orderHistorySection = document.getElementById("orderHistorySection");
+
+  if (!orderHistoryButton || !orderHistorySection) {
+    return;
+  }
+
+  orderHistoryButton.addEventListener("click", async () => {
+    orderHistorySection.classList.remove("is-hidden");
+    await loadOrderHistory();
+    orderHistorySection.scrollIntoView({ behavior: "smooth" });
+  });
+
+  hideOrderHistoryButton?.addEventListener("click", () => {
+    orderHistorySection.classList.add("is-hidden");
+  });
+}
+
 function setupCheckoutForm() {
   const checkoutForm = document.getElementById("checkoutForm");
   const checkoutSuccessMessage = document.getElementById(
@@ -262,6 +478,17 @@ function setupCheckoutForm() {
       updateCartCount();
       renderCartPage();
       checkoutForm.reset();
+
+      const orderHistorySection = document.getElementById(
+        "orderHistorySection",
+      );
+
+      if (
+        orderHistorySection &&
+        !orderHistorySection.classList.contains("is-hidden")
+      ) {
+        await loadOrderHistory();
+      }
     } catch (error) {
       console.error("Checkout error:", error);
 
@@ -280,4 +507,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupAddToCartButtons();
   renderCartPage();
   setupCheckoutForm();
+  setupOrderHistoryControls();
 });

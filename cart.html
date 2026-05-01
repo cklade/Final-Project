@@ -91,6 +91,10 @@
           <button id="clearCartButton" class="button is-danger is-hidden">
             Clear Cart
           </button>
+
+          <button id="orderHistoryButton" class="button hero-button-secondary">
+            View Order History
+          </button>
         </div>
 
         <section class="mb-6">
@@ -103,6 +107,33 @@
             Total:
             <strong><span id="cartTotalAmount">$0.00</span></strong>
           </p>
+        </section>
+
+        <section id="orderHistorySection" class="checkout-card mb-6 is-hidden">
+          <div
+            class="is-flex is-justify-content-space-between is-align-items-center is-flex-wrap-wrap mb-4"
+          >
+            <div>
+              <h2 class="title is-4 has-text-black mb-2">Order History</h2>
+              <p class="order-history-intro">
+                View previous checkout requests submitted from your account.
+              </p>
+            </div>
+
+            <button
+              id="hideOrderHistoryButton"
+              class="button hero-button-secondary mt-3-mobile"
+            >
+              Hide Order History
+            </button>
+          </div>
+
+          <div
+            id="orderHistoryMessage"
+            class="notification is-light is-hidden"
+          ></div>
+
+          <div id="orderHistoryContainer"></div>
         </section>
 
         <section class="checkout-card mb-6">
